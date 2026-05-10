@@ -39,6 +39,36 @@ def get_changes(online_version=None):
 def version_check(current_version, online_version):
 	return string_alphanum_to_num(current_version) != string_alphanum_to_num(online_version)
 
+def refresh_addon_keys(self):
+	# For update 2.2.01 - 03
+	from caches.trakt_cache import clear_all_trakt_cache_data
+	from caches.tmdb_lists import tmdb_lists_cache
+	from caches.settings_cache import restore_setting_default
+	show_dialog = False
+	if get_setting('fenlight.tmdb_api') == 'b14c2656f72e5bab233def36928a202b':
+		restore_setting_default({'silent': 'true', 'setting_id': 'tmdb_api'})
+		set_setting('tmdb.token', 'empty_setting')
+		set_setting('tmdb.account_id', 'empty_setting')
+		set_setting('tmdb.username', 'empty_setting')
+		set_setting('tmdb.session_id', 'empty_setting')
+		set_setting('tmdb.account_session_id', 'empty_setting')
+		tmdb_lists_cache.clear_all()
+		show_dialog = True
+	if get_setting('fenlight.trakt.client') == 'c787278de2e4bba0a92125433e89e0d71d89a09a2f9c44dd69c2f13c8e8eef06':
+		restore_setting_default({'silent': 'true', 'setting_id': 'trakt.client'})
+		set_setting('trakt.user', 'empty_setting')
+		set_setting('trakt.expires', '0')
+		set_setting('trakt.token', '0')
+		set_setting('trakt.refresh', '0')
+		set_setting('trakt.next_daily_clear', '0')
+		set_setting('watched_indicators', '0')
+		clear_all_trakt_cache_data(silent=True, refresh=False)
+		show_dialog = True
+	if show_dialog:
+		set_setting('fenlight.trakt.client', "6d77dc23a83a021cfa2285d6f91ea70a691b2857cd25ca21df46b18786c18eea")
+		set_setting('fenlight.trakt.secret', "827c62f2e069298310b6935991b3603205d34ca052db160361d475517c937ca7")
+		set_setting('tmdb_api', "e325eaa35bd506111b6cb61eebbc803e")
+
 def update_check(action=4):
 	if action == 3: return
 	current_version, online_version = get_versions()
