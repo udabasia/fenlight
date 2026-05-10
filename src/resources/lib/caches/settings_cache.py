@@ -215,10 +215,10 @@ def default_settings():
 #==================== UTC Time Offset
 {'setting_id': 'datetime.offset', 'setting_type': 'action', 'setting_default': '0', 'min_value': '-15', 'max_value': '15'},
 #==================== Downloads
-{'setting_id': 'movie_download_directory', 'setting_type': 'path', 'setting_default': 'special://profile/addon_data/plugin.video.fenlight-ud/Movies Downloads/', 'browse_mode': '0'},
-{'setting_id': 'tvshow_download_directory', 'setting_type': 'path', 'setting_default': 'special://profile/addon_data/plugin.video.fenlight-ud/TV Show Downloads/', 'browse_mode': '0'},
-{'setting_id': 'premium_download_directory', 'setting_type': 'path', 'setting_default': 'special://profile/addon_data/plugin.video.fenlight-ud/Premium Downloads/', 'browse_mode': '0'},
-{'setting_id': 'image_download_directory', 'setting_type': 'path', 'setting_default': 'special://profile/addon_data/plugin.video.fenlight-ud/Image Downloads/', 'browse_mode': '0'},
+{'setting_id': 'movie_download_directory', 'setting_type': 'path', 'setting_default': 'special://profile/addon_data/plugin.video.fenlight.ud/Movies Downloads/', 'browse_mode': '0'},
+{'setting_id': 'tvshow_download_directory', 'setting_type': 'path', 'setting_default': 'special://profile/addon_data/plugin.video.fenlight.ud/TV Show Downloads/', 'browse_mode': '0'},
+{'setting_id': 'premium_download_directory', 'setting_type': 'path', 'setting_default': 'special://profile/addon_data/plugin.video.fenlight.ud/Premium Downloads/', 'browse_mode': '0'},
+{'setting_id': 'image_download_directory', 'setting_type': 'path', 'setting_default': 'special://profile/addon_data/plugin.video.fenlight.ud/Image Downloads/', 'browse_mode': '0'},
 
 
 #================================================================================#
