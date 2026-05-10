@@ -39,7 +39,7 @@ def get_changes(online_version=None):
 def version_check(current_version, online_version):
 	return string_alphanum_to_num(current_version) != string_alphanum_to_num(online_version)
 
-def refresh_addon_keys(self):
+def refresh_addon_keys():
 	# For update 2.2.01 - 03
 	from caches.trakt_cache import clear_all_trakt_cache_data
 	from caches.tmdb_lists import tmdb_lists_cache
