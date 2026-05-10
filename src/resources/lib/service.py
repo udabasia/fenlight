@@ -83,7 +83,7 @@ class OnUpdateChanges:
 			show_dialog = True
 		if show_dialog:
 			set_setting('fenlight.trakt.client', "6d77dc23a83a021cfa2285d6f91ea70a691b2857cd25ca21df46b18786c18eea")
-			set_setting('fenlight.trakt.secret', "827c62f2e069298310b6935991b3603205d34ca052db160361d475517c937ca7")
+			set_setting('trakt.secret', "827c62f2e069298310b6935991b3603205d34ca052db160361d475517c937ca7")
 			set_setting('tmdb_api', "e325eaa35bd506111b6cb61eebbc803e")
 
 class CustomWindowsPrepare:
