@@ -62,7 +62,7 @@ class OnUpdateChanges:
 		from caches.tmdb_lists import tmdb_lists_cache
 		from caches.settings_cache import restore_setting_default
 		show_dialog = False
-		if get_setting('fenlight.tmdb_api') == 'b370b60447737762ca38457bd77579b3':
+		if get_setting('fenlight.tmdb_api') == 'b14c2656f72e5bab233def36928a202b':
 			restore_setting_default({'silent': 'true', 'setting_id': 'tmdb_api'})
 			set_setting('tmdb.token', 'empty_setting')
 			set_setting('tmdb.account_id', 'empty_setting')
@@ -71,7 +71,7 @@ class OnUpdateChanges:
 			set_setting('tmdb.account_session_id', 'empty_setting')
 			tmdb_lists_cache.clear_all()
 			show_dialog = True
-		if get_setting('fenlight.trakt.client') == '1038ef327e86e7f6d39d80d2eb5479bff66dd8394e813c5e0e387af0f84d89fb':
+		if get_setting('fenlight.trakt.client') == 'c787278de2e4bba0a92125433e89e0d71d89a09a2f9c44dd69c2f13c8e8eef06':
 			restore_setting_default({'silent': 'true', 'setting_id': 'trakt.client'})
 			set_setting('trakt.user', 'empty_setting')
 			set_setting('trakt.expires', '0')
@@ -82,12 +82,9 @@ class OnUpdateChanges:
 			clear_all_trakt_cache_data(silent=True, refresh=False)
 			show_dialog = True
 		if show_dialog:
-			text = 'The original developer of Fen Light has revoked all keys (Trakt, TMDb) that have been used up until now '\
-			'within this addon, with permission, due to security concerns.'
-			kodi_utils.ok_dialog(heading='Addon Credentials Reset', text=text)
-			text = 'This unfortunately means you will need to re-authenticate your Trakt & TMDb accounts through Fen Light AM  if you are currently using them. ' \
-			'My apologies, but with the previous keys being revoked, this is necessary.'
-			kodi_utils.ok_dialog(heading='Addon Credentials Reset', text=text)
+			set_setting('fenlight.trakt.client', "6d77dc23a83a021cfa2285d6f91ea70a691b2857cd25ca21df46b18786c18eea")
+			set_setting('fenlight.trakt.secret', "827c62f2e069298310b6935991b3603205d34ca052db160361d475517c937ca7")
+			set_setting('tmdb_api', "e325eaa35bd506111b6cb61eebbc803e")
 
 class CustomWindowsPrepare:
 	def run(self):
