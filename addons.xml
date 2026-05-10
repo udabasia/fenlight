@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addons>
+
+<addon id="plugin.video.fenlight"
+       name="My Addon"
+       version="1.0.0"
+       provider-name="YourName">
+
+    <requires>
+        <import addon="xbmc.python" version="3.0.0"/>
+    </requires>
+
+    <extension point="xbmc.python.pluginsource"
+               library="default.py">
+        <provides>video</provides>
+    </extension>
+
+    <extension point="xbmc.addon.metadata">
+        <summary>My Kodi addon</summary>
+        <description>Example addon</description>
+        <platform>all</platform>
+    </extension>
+
+</addon>
+
+</addons>
