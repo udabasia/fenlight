@@ -9,17 +9,9 @@
                name="My Repo">
 
         <dir>
-            <info compressed="false">
-                https://udabasia.github.io/fenlight/addons.xml
-            </info>
-
-            <checksum>
-                https://udabasia.github.io/fenlight/addons.xml.md5
-            </checksum>
-
-            <datadir zip="true">
-                https://udabasia.github.io/fenlight/
-            </datadir>
+            <info compressed="false">https://udabasia.github.io/fenlight/addons.xml</info>
+            <checksum>https://udabasia.github.io/fenlight/addons.xml.md5</checksum>
+            <datadir zip="true">https://udabasia.github.io/fenlight/</datadir>
         </dir>
 
     </extension>
