@@ -70,6 +70,6 @@ def favorites_manager():
 	if params: dialogs.favorites_manager_choice(params)
 
 def get_params(param_name):
-	try: params = dict(parse_qsl(get_infolabel('ListItem.Property(fenlight.%s)' % param_name).split('plugin://plugin.video.fenlight/?')[1], keep_blank_values=True))
+	try: params = dict(parse_qsl(get_infolabel('ListItem.Property(fenlight.%s)' % param_name).split('plugin://plugin.video.fenlight-ud/?')[1], keep_blank_values=True))
 	except: params = None
 	return params

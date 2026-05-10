@@ -266,7 +266,7 @@ class FontUtils:
 		if not skin_files:
 			kodi_utils.set_property('fenlight.current_skin', self.current_skin)
 			kodi_utils.set_property('fenlight.current_font', self.current_font)
-		skin_files = skin_files or kodi_utils.list_dirs(kodi_utils.translate_path('special://home/addons/plugin.video.fenlight/resources/skins/Default/1080i/'))[1]
+		skin_files = skin_files or kodi_utils.list_dirs(kodi_utils.translate_path('special://home/addons/plugin.video.fenlight-ud/resources/skins/Default/1080i/'))[1]
 		for item in skin_files: self.replace_font(item, replacement_values)
 
 	def get_skin_folder(self):
@@ -323,7 +323,7 @@ class FontUtils:
 		return results
 
 	def replace_font(self, window, replacement_values):
-		file = kodi_utils.translate_path('special://home/addons/plugin.video.fenlight/resources/skins/Default/1080i/' + window)
+		file = kodi_utils.translate_path('special://home/addons/plugin.video.fenlight-ud/resources/skins/Default/1080i/' + window)
 		with kodi_utils.open_file(file) as f: content = f.read()
 		for item in replacement_values:
 			try: content = re.sub(r'<font>(.*?)</font> <\!-- %s -->' % item[0], '<font>%s</font> <!-- %s -->' % (item[1], item[0]), content)
@@ -393,7 +393,7 @@ class ExtrasUtils:
 	def run(self):
 		finished_templates = []
 		skin_file = 'extras.xml'
-		file = kodi_utils.translate_path('special://home/addons/plugin.video.fenlight/resources/skins/Default/1080i/%s' % skin_file)
+		file = kodi_utils.translate_path('special://home/addons/plugin.video.fenlight-ud/resources/skins/Default/1080i/%s' % skin_file)
 		media_list = settings.extras_order()
 		media_list_length = len(media_list)
 		first_container = media_list[0]
