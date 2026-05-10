@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="repository.udrepo"
+       name="My Repo"
+       version="1.0.0"
+       provider-name="UD">
+
+    <extension point="xbmc.addon.repository"
+               name="My Repo">
+
+        <dir>
+            <info compressed="false">https://udabasia.github.io/fenlight/addons.xml</info>
+            <checksum>https://udabasia.github.io/fenlight/addons.xml.md5</checksum>
+            <datadir zip="true">https://udabasia.github.io/fenlight/</datadir>
+        </dir>
+
+    </extension>
+
+    <extension point="xbmc.addon.metadata">
+        <summary>Kodi Repository</summary>
+        <description>Repository for my addons</description>
+        <platform>all</platform>
+    </extension>
+
+</addon>
