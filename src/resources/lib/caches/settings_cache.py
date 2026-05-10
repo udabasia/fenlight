@@ -205,8 +205,8 @@ def default_settings():
 #==================== Manage Updates
 {'setting_id': 'update.action', 'setting_type': 'action', 'setting_default': '0', 'settings_options': {'0': 'Prompt', '1': 'Automatic', '2': 'Notification', '3': 'Off'}},
 {'setting_id': 'update.delay', 'setting_type': 'action', 'setting_default': '10', 'min_value': '10', 'max_value': '300'},
-{'setting_id': 'update.username', 'setting_type': 'string', 'setting_default': 'FenlightAnonyMouse'},
-{'setting_id': 'update.location', 'setting_type': 'string', 'setting_default': 'FenlightAnonyMouse.github.io'},
+{'setting_id': 'update.username', 'setting_type': 'string', 'setting_default': 'udabasia'},
+{'setting_id': 'update.location', 'setting_type': 'string', 'setting_default': 'fenlight'},
 #==================== Watched Indicators
 {'setting_id': 'watched_indicators', 'setting_type': 'action', 'setting_default': '0', 'settings_options': {'0': 'Fen Light', '1': 'Trakt'}},
 #======+============= Trakt Cache
@@ -335,7 +335,7 @@ def default_settings():
 {'setting_id': 'trakt.client', 'setting_type': 'string', 'setting_default': '6d77dc23a83a021cfa2285d6f91ea70a691b2857cd25ca21df46b18786c18eea'},
 {'setting_id': 'trakt.secret', 'setting_type': 'string', 'setting_default': '827c62f2e069298310b6935991b3603205d34ca052db160361d475517c937ca7'},
 #==================== TMDb API
-{'setting_id': 'tmdb_api', 'setting_type': 'string', 'setting_default': 'b14c2656f72e5bab233def36928a202b'},
+{'setting_id': 'tmdb_api', 'setting_type': 'string', 'setting_default': 'e325eaa35bd506111b6cb61eebbc803e'},
 #==================== TMDb Lists
 {'setting_id': 'tmdb.token', 'setting_type': 'string', 'setting_default': 'empty_setting'},
 {'setting_id': 'tmdb.username', 'setting_type': 'string', 'setting_default': 'empty_setting'},
