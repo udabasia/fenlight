@@ -5,7 +5,11 @@ import os
 tree = ET.parse('src/addon.xml')
 root = tree.getroot()
 addon_id = root.attrib.get("id")
-ver = root.attrib.get("version")
+with open('build.properties') as f: 
+    ver = f.read()
+    
+root.attrib["version"] = ver
+tree.write("src/addon.xml")
 output_filename = f"./packages/{addon_id}-{ver}"
 
 os.makedirs(f"./__temp__/{addon_id}")

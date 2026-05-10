@@ -13,7 +13,7 @@ def get_location(insert=''):
 
 def get_versions():
 	try:
-		result = requests.get(get_location('fenlightam_version'))
+		result = requests.get('https://github.com/%s/%s/raw/main/build.properties' % (get_setting('fenlight.update.username'), get_setting('update.location')))
 		if result.status_code != 200: return None, None
 		online_version = result.text.replace('\n', '')
 		current_version = kodi_utils.addon_version()
