@@ -5,7 +5,7 @@ import os
 tree = ET.parse('src/addon.xml')
 root = tree.getroot()
 addon_id = root.attrib.get("id")
-with open('build.properties') as f: 
+with open('./packages/fenlight_version') as f: 
     ver = f.read()
     
 root.attrib["version"] = ver
