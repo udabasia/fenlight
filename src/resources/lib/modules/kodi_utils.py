@@ -125,7 +125,7 @@ def addon_fanart():
 	return get_property('fenlight.addon_fanart') or translate_path(addon_info('fanart'))
 
 def get_icon(image_name, image_folder='icons', image_type='png'):
-	return 'https://raw.githubusercontent.com/%s/%s/main/packages/media/%s/%s.%s' \
+	return 'https://raw.githubusercontent.com/%s/%s/main/resources/media/%s/%s.%s' \
 			% (get_property('fenlight.update.username'), get_property('fenlight.update.location'), image_folder, image_name, image_type)
 
 def get_addon_fanart():
