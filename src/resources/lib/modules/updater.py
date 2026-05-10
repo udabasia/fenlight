@@ -43,6 +43,7 @@ def update_check(action=4):
 	if action == 3: return
 	current_version, online_version = get_versions()
 	logger("DEBUG", f'{current_version}, {online_version}')
+	kodi_utils.notification(f'{current_version}, {online_version}', icon=kodi_utils.get_icon('downloads'))
 	if not current_version: return
 	show_after_action = True
 	if not version_check(current_version, online_version):
