@@ -66,13 +66,12 @@ def get_secrets():
 	if not _validate_secret_password(password):
 		return kodi_utils.ok_dialog(heading='Access Denied', text='Incorrect password.')
 
-	local_path = path.abspath(path.join(path.dirname(__file__), '..', 'secrets.json.enc'))
+	local_path = path.abspath(path.join(path.dirname(__file__), '../..', 'secrets.json.enc'))
 	if path.exists(local_path):
 		try:
 			with open(local_path, 'rb') as f:
 				blob = f.read()
-			file = decrypt_json_blob(blob, password)
-			secrets = json.loads(file)
+			secrets = decrypt_json_blob(blob, password)
 			set_setting('trakt.client', secrets.get('TRAKT_CLIENT', ''))
 			set_setting('trakt.secret', secrets.get('TRAKT_SECRET', ''))
 			set_setting('tb.token', secrets.get('TORBOX_API', ''))
