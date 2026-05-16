@@ -333,7 +333,7 @@ def unzip(zip_location, destination_location, destination_check, show_busy=True)
 
 def make_qrcode(url):
 	if url == None: return
-	import fenlight.resources.lib.segno as segno
+	import segno as segno
 	from os import path
 	from modules.kodi_utils import addon_profile
 	try:
