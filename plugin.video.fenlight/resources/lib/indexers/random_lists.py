@@ -2,13 +2,13 @@
 import sys
 import json
 import random
-from fenlight.resources.lib.caches.random_widgets_cache import RandomWidgets
-from fenlight.resources.lib.indexers.movies import Movies
-from fenlight.resources.lib.indexers.tvshows import TVShows
-from fenlight.resources.lib.modules import meta_lists
-from fenlight.resources.lib.modules.settings import paginate, page_limit, max_threads
-from fenlight.resources.lib.modules import kodi_utils
-from fenlight.resources.lib.modules.utils import manual_function_import, TaskPool
+from caches.random_widgets_cache import RandomWidgets
+from indexers.movies import Movies
+from indexers.tvshows import TVShows
+from modules import meta_lists
+from modules.settings import paginate, page_limit, max_threads
+from modules import kodi_utils
+from modules.utils import manual_function_import, TaskPool
 # logger = kodi_utils.logger
 
 def get_persistent_content(database, key, is_external):
@@ -128,7 +128,7 @@ class RandomLists():
 		self.make_directory()
 
 	def random_trakt_collection_watchlist(self):
-		from fenlight.resources.lib.apis.trakt_api import trakt_collection_lists, trakt_watchlist_lists
+		from apis.trakt_api import trakt_collection_lists, trakt_watchlist_lists
 		random_list, cache_to_memory = get_persistent_content(self.database, '%s_%s' % (self.menu_type, self.action), self.is_external)
 		if not random_list:
 			function = trakt_collection_lists if self.action == 'trakt_collection_lists' else trakt_watchlist_lists
@@ -143,15 +143,15 @@ class RandomLists():
 		self.make_directory()
 
 	def random_because_you_watched(self):
-		from fenlight.resources.lib.apis.tmdb_api import tmdb_movies_recommendations, tmdb_tv_recommendations
-		from fenlight.resources.lib.apis.imdb_api import imdb_more_like_this
-		from fenlight.resources.lib.apis.trakt_api import trakt_movies_related, trakt_tv_related
-		from fenlight.resources.lib.apis.ai_api import ai_similar
-		from fenlight.resources.lib.modules.episode_tools import single_last_watched_episodes
-		from fenlight.resources.lib.modules.settings import tmdb_api_key, mpaa_region, recommend_service, recommend_seed
-		from fenlight.resources.lib.modules.metadata import movie_meta, tvshow_meta
-		from fenlight.resources.lib.modules.watched_status import get_recently_watched
-		from fenlight.resources.lib.modules.utils import get_current_timestamp, get_datetime
+		from apis.tmdb_api import tmdb_movies_recommendations, tmdb_tv_recommendations
+		from apis.imdb_api import imdb_more_like_this
+		from apis.trakt_api import trakt_movies_related, trakt_tv_related
+		from apis.ai_api import ai_similar
+		from modules.episode_tools import single_last_watched_episodes
+		from modules.settings import tmdb_api_key, mpaa_region, recommend_service, recommend_seed
+		from modules.metadata import movie_meta, tvshow_meta
+		from modules.watched_status import get_recently_watched
+		from modules.utils import get_current_timestamp, get_datetime
 		random_list, cache_to_memory = get_persistent_content(self.database, '%s_%s' % (self.menu_type, self.action), self.is_external)
 		recommend_type = recommend_service()
 		try:
@@ -186,8 +186,8 @@ class RandomLists():
 		self.make_directory()
 
 	def random_trakt_lists(self):
-		from fenlight.resources.lib.apis.trakt_api import trakt_get_lists, get_trakt_list_contents
-		from fenlight.resources.lib.indexers.trakt_lists import build_trakt_list
+		from apis.trakt_api import trakt_get_lists, get_trakt_list_contents
+		from indexers.trakt_lists import build_trakt_list
 		list_type = self.params.get('list_type')
 		list_type_name = 'Trakt My Lists' if list_type == 'my_lists' else 'Trakt Liked Lists' if list_type == 'liked_lists' else 'Trakt User Lists'
 		random_list, cache_to_memory = get_persistent_content(self.database, '%s_%s' % (self.mode, list_type), self.is_external)
@@ -217,7 +217,7 @@ class RandomLists():
 		self.make_directory()
 
 	def random_personal_lists(self):
-		from fenlight.resources.lib.indexers.personal_lists import get_personal_list, build_personal_list, get_all_personal_lists
+		from indexers.personal_lists import get_personal_list, build_personal_list, get_all_personal_lists
 		random_list, cache_to_memory = get_persistent_content(self.database, self.mode, self.is_external)
 		if not random_list:
 			self.random_results = [i for i in get_all_personal_lists() if i['total']]
@@ -241,7 +241,7 @@ class RandomLists():
 		self.make_directory()
 
 	def random_tmdb_lists(self):
-		from fenlight.resources.lib.indexers.tmdb_lists import get_tmdb_list, build_tmdb_list, get_all_tmdb_lists
+		from indexers.tmdb_lists import get_tmdb_list, build_tmdb_list, get_all_tmdb_lists
 		random_list, cache_to_memory = get_persistent_content(self.database, self.mode, self.is_external)
 		if not random_list:
 			self.random_results = [i for i in get_all_tmdb_lists() if i['number_of_items']]
@@ -264,8 +264,8 @@ class RandomLists():
 		self.make_directory()
 
 	def trakt_lists_contents(self):
-		from fenlight.resources.lib.apis.trakt_api import get_trakt_list_contents
-		from fenlight.resources.lib.indexers.trakt_lists import build_trakt_list
+		from apis.trakt_api import get_trakt_list_contents
+		from indexers.trakt_lists import build_trakt_list
 		list_name, list_type = self.params.get('list_name'), self.params.get('list_type')
 		list_type_name = 'Trakt My Lists' if list_type == 'my_lists' else 'Trakt Liked Lists' if list_type == 'liked_lists' else 'Trakt User Lists'
 		random_list, cache_to_memory = get_persistent_content(self.database, '%s_%s' % (list_type, list_name), self.is_external)
@@ -288,7 +288,7 @@ class RandomLists():
 		self.make_directory()
 
 	def personal_lists_contents(self):
-		from fenlight.resources.lib.indexers.personal_lists import get_personal_list, build_personal_list
+		from indexers.personal_lists import get_personal_list, build_personal_list
 		list_name = self.params.get('list_name')
 		random_list, cache_to_memory = get_persistent_content(self.database, '%s-%s' % (self.mode, list_name), self.is_external)
 		if not random_list:
@@ -308,7 +308,7 @@ class RandomLists():
 		self.make_directory()
 
 	def tmdb_lists_contents(self):
-		from fenlight.resources.lib.indexers.tmdb_lists import get_tmdb_list, build_tmdb_list
+		from indexers.tmdb_lists import get_tmdb_list, build_tmdb_list
 		list_id, list_name, media_type = self.params.get('list_id'), self.params.get('list_name')or self.params.get('name'), self.params.get('media_type')
 		random_list, cache_to_memory = get_persistent_content(self.database, '%s_%s' % (self.mode, list_id), self.is_external)
 		if not random_list:
@@ -384,21 +384,21 @@ def random_shortcut_folders(folder_name, random_results):
 	if menu_type == 'tvshow':
 		return TVShows(random_list).fetch_list()
 	if menu_type == 'season':
-		from fenlight.resources.lib.indexers.seasons import build_season_list
+		from indexers.seasons import build_season_list
 		return build_season_list(random_list)
 	if menu_type == 'episode':
-		from fenlight.resources.lib.indexers.episodes import build_episode_list
+		from indexers.episodes import build_episode_list
 		return build_episode_list(random_list)
 	if menu_type == 'single_episode':
-		from fenlight.resources.lib.indexers.episodes import build_single_episode
+		from indexers.episodes import build_single_episode
 		return build_single_episode(kodi_utils.random_episodes_check()[random_list['mode']], random_list)
 	if menu_type == 'trakt_list':
-		from fenlight.resources.lib.indexers.trakt_lists import build_trakt_list
+		from indexers.trakt_lists import build_trakt_list
 		return build_trakt_list(random_list)
 	if menu_type == 'personal_list':
-		from fenlight.resources.lib.indexers.personal_lists import build_personal_list
+		from indexers.personal_lists import build_personal_list
 		return build_personal_list(random_list)
 	if menu_type == 'tmdb_list':
-		from fenlight.resources.lib.indexers.tmdb_lists import build_tmdb_list
+		from indexers.tmdb_lists import build_tmdb_list
 		return build_tmdb_list(random_list)
 	return kodi_utils.end_directory(int(sys.argv[1]))

@@ -6,11 +6,11 @@ import time
 import requests
 from threading import Thread
 from urllib.parse import unquote, unquote_plus
-from fenlight.resources.lib.caches.settings_cache import get_setting
-from fenlight.resources.lib.modules.metadata import episodes_meta
-from fenlight.resources.lib.modules.settings import date_offset
-from fenlight.resources.lib.modules.kodi_utils import supported_media, get_property, set_property, notification
-from fenlight.resources.lib.modules.utils import adjust_premiered_date, get_datetime, jsondate_to_datetime, subtract_dates, chunks
+from caches.settings_cache import get_setting
+from modules.metadata import episodes_meta
+from modules.settings import date_offset
+from modules.kodi_utils import supported_media, get_property, set_property, notification
+from modules.utils import adjust_premiered_date, get_datetime, jsondate_to_datetime, subtract_dates, chunks
 # from modules.kodi_utils import logger
 
 def extras():
@@ -85,7 +85,7 @@ def pack_enable_check(meta, season, episode):
 	return False, False
 
 def clear_scrapers_cache(silent=False):
-	from fenlight.resources.lib.caches.base_cache import clear_cache
+	from caches.base_cache import clear_cache
 	for item in ('internal_scrapers', 'external_scrapers'): clear_cache(item, silent=True)
 	if not silent: notification('Success')
 

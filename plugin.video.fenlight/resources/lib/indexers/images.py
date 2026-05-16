@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 import os
 import json
-from fenlight.resources.lib.windows.base_window import open_window
-from fenlight.resources.lib.apis.tmdb_api import tmdb_people_info, tmdb_people_full_info, tmdb_popular_people, tmdb_trending_people_day, tmdb_trending_people_week, tmdb_media_images
-from fenlight.resources.lib.apis.easynews_api import EasyNews
-from fenlight.resources.lib.modules.kodi_utils import notification, make_listitem, list_dirs, delete_file, show_busy_dialog, hide_busy_dialog, get_icon, image_extensions
+from windows.base_window import open_window
+from apis.tmdb_api import tmdb_people_info, tmdb_people_full_info, tmdb_popular_people, tmdb_trending_people_day, tmdb_trending_people_week, tmdb_media_images
+from apis.easynews_api import EasyNews
+from modules.kodi_utils import notification, make_listitem, list_dirs, delete_file, show_busy_dialog, hide_busy_dialog, get_icon, image_extensions
 # from modules.kodi_utils import logger
 
 class Images():
@@ -96,7 +96,7 @@ class Images():
 		self.next_page_params = {'mode': 'tmdb_people_search_image_results', 'key_id': key_id, 'page_no': page_no}
 
 	def favorite_people_list_image_results(self, return_items=False):
-		from fenlight.resources.lib.modules.favorites import get_favorites
+		from modules.favorites import get_favorites
 		def builder():
 			for item in image_info:
 				try:

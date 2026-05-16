@@ -3,12 +3,12 @@ import re
 import json
 import base64
 from urllib.parse import quote, urlencode
-from fenlight.resources.lib.caches.base_cache import connect_database
-from fenlight.resources.lib.caches.main_cache import cache_object
-from fenlight.resources.lib.caches.settings_cache import get_setting
-from fenlight.resources.lib.modules.dom_parser import parseDOM
-from fenlight.resources.lib.modules.utils import chunks, remove_accents
-from fenlight.resources.lib.modules.kodi_utils import make_session
+from caches.base_cache import connect_database
+from caches.main_cache import cache_object
+from caches.settings_cache import get_setting
+from modules.dom_parser import parseDOM
+from modules.utils import chunks, remove_accents
+from modules.kodi_utils import make_session
 # from modules.kodi_utils import logger
 
 session = make_session()
@@ -95,7 +95,7 @@ class EasyNewsAPI:
 					count += 1
 					yield result
 				except Exception as e:
-					from fenlight.resources.lib.modules.kodi_utils import logger
+					from modules.kodi_utils import logger
 					logger('easynews API Exception', str(e))
 		down_url = files.get('downURL')
 		download_url = 'https://%s:%s@members.easynews.com/dl' % (quote(self.username), quote(self.password))
@@ -133,7 +133,7 @@ class EasyNewsAPI:
 							  'thumbnail': thumbnail}
 					yield result
 				except Exception as e:
-					from fenlight.resources.lib.modules.kodi_utils import logger
+					from modules.kodi_utils import logger
 					logger('easynews API Exception', str(e))
 		down_url = files.get('downURL')
 		streaming_url = 'https://%s:%s@members.easynews.com/dl' % (quote(self.username), quote(self.password))

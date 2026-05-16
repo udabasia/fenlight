@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 import sys
 import json
-from fenlight.resources.lib.modules import kodi_utils, settings
-from fenlight.resources.lib.modules.metadata import movie_meta, movieset_meta
-from fenlight.resources.lib.modules.utils import get_datetime, get_current_timestamp, paginate_list, jsondate_to_datetime, TaskPool, manual_function_import
-from fenlight.resources.lib.modules import watched_status
+from modules import kodi_utils, settings
+from modules.metadata import movie_meta, movieset_meta
+from modules.utils import get_datetime, get_current_timestamp, paginate_list, jsondate_to_datetime, TaskPool, manual_function_import
+from modules import watched_status
 # logger = kodi_utils.logger
 
 class Movies:
@@ -105,7 +105,7 @@ class Movies:
 				data = function(key_id)
 				self.list = [i['ids'] for i in data]
 			elif self.action == 'imdb_more_like_this':
-				from fenlight.resources.lib.apis.imdb_api import imdb_more_like_this
+				from apis.imdb_api import imdb_more_like_this
 				self.id_type = 'imdb_id'
 				key_id = self.params_get('key_id')
 				if self.params_get('get_imdb'):

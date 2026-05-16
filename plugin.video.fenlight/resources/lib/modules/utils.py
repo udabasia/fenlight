@@ -10,8 +10,8 @@ from queue import SimpleQueue
 from threading import Thread, activeCount
 from importlib import import_module
 from datetime import datetime, timedelta, date
-from fenlight.resources.lib.modules.settings import max_threads
-from fenlight.resources.lib.modules.kodi_utils import sleep, logger
+from modules.settings import max_threads
+from modules.kodi_utils import sleep, logger
 
 class TaskPool:
 	def __init__(self):
@@ -55,7 +55,7 @@ def change_image_resolution(image, replace_res):
 	return re.sub(r'(w185|w300|w342|w780|w1280|h632|original)', replace_res, image)
 
 def append_module_to_syspath(location):
-	from fenlight.resources.lib.modules.kodi_utils import translate_path
+	from modules.kodi_utils import translate_path
 	sys.path.append(translate_path(location))
 
 def manual_function_import(location, function_name):
@@ -320,7 +320,7 @@ def paginate_list(item_list, page, limit=20, paginate_start=0):
 
 def unzip(zip_location, destination_location, destination_check, show_busy=True):
 	from zipfile import ZipFile
-	from fenlight.resources.lib.modules.kodi_utils import show_busy_dialog, hide_busy_dialog, path_exists
+	from modules.kodi_utils import show_busy_dialog, hide_busy_dialog, path_exists
 	if show_busy: show_busy_dialog()
 	try:
 		zipfile = ZipFile(zip_location)
@@ -335,7 +335,7 @@ def make_qrcode(url):
 	if url == None: return
 	import fenlight.resources.lib.segno as segno
 	from os import path
-	from fenlight.resources.lib.modules.kodi_utils import addon_profile
+	from modules.kodi_utils import addon_profile
 	try:
 		art_path = path.join(addon_profile(), 'qr.png')
 		qrcode = segno.make(url, micro=False)
@@ -379,7 +379,7 @@ def copy2clip(txt):
 def image_from_db(image_url, delete=True):
 	import os
 	import sqlite3 as database
-	from fenlight.resources.lib.modules.kodi_utils import translate_path
+	from modules.kodi_utils import translate_path
 	try:
 		thumbs_folder = translate_path('special://thumbnails')
 		dbfile = translate_path(os.path.join('special://database', 'Textures13.db'))
@@ -406,7 +406,7 @@ def make_image(list_type, image_type, list_name, images, current_image):
 	import shutil
 	import urllib.request
 	from PIL import Image
-	from fenlight.resources.lib.modules.kodi_utils import translate_path, addon_profile, make_directory, notification
+	from modules.kodi_utils import translate_path, addon_profile, make_directory, notification
 	def _process(count, item):
 		saved_path = translate_path(os.path.join(worker_image_folder, '%s_%02d.jpg' % (list_name, count + 1)))
 		urllib.request.urlretrieve(item, saved_path)
@@ -437,7 +437,7 @@ def download_image(list_type, image_type, list_name, url, current_image):
 	import os
 	import shutil
 	import urllib.request
-	from fenlight.resources.lib.modules.kodi_utils import addon_profile, make_directory, notification
+	from modules.kodi_utils import addon_profile, make_directory, notification
 	saved_final_image = None
 	md5_image_name = gen_md5(list_name)
 	try:

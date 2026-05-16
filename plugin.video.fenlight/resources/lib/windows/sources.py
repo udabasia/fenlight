@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 import json
-from fenlight.resources.lib.windows.base_window import BaseDialog
-from fenlight.resources.lib.caches.settings_cache import set_setting
-from fenlight.resources.lib.modules.debrid import debrid_for_ext_cache_check
-from fenlight.resources.lib.modules.utils import TaskPool
-from fenlight.resources.lib.modules.source_utils import source_filters
-from fenlight.resources.lib.modules.settings import provider_sort_ranks, avoid_episode_spoilers, max_threads
-from fenlight.resources.lib.modules.kodi_utils import get_icon, kodi_dialog, hide_busy_dialog, addon_fanart, select_dialog, ok_dialog, notification
+from windows.base_window import BaseDialog
+from caches.settings_cache import set_setting
+from modules.debrid import debrid_for_ext_cache_check
+from modules.utils import TaskPool
+from modules.source_utils import source_filters
+from modules.settings import provider_sort_ranks, avoid_episode_spoilers, max_threads
+from modules.kodi_utils import get_icon, kodi_dialog, hide_busy_dialog, addon_fanart, select_dialog, ok_dialog, notification
 # from modules.kodi_utils import logger
 
 class SourcesResults(BaseDialog):
@@ -108,7 +108,7 @@ class SourcesResults(BaseDialog):
 				return self.close()
 			chosen_source = json.loads(chosen_listitem.getProperty('source'))
 			if 'Uncached' in chosen_source.get('cache_provider', ''):
-				from fenlight.resources.lib.modules.debrid import manual_add_magnet_to_cloud
+				from modules.debrid import manual_add_magnet_to_cloud
 				return manual_add_magnet_to_cloud({'mode': 'manual_add_magnet_to_cloud', 'provider': chosen_source['debrid'], 'magnet_url': chosen_source['url']})
 			self.selected = ('play', chosen_source)
 			return self.close()
@@ -119,7 +119,7 @@ class SourcesResults(BaseDialog):
 				if isinstance(choice, dict): return self.execute_code('RunPlugin(%s)' % self.build_url(choice))
 				if choice == 'results_info': return self.open_window(('windows.sources', 'SourcesInfo'), 'sources_info.xml', item=chosen_listitem)
 				if choice == 'rd_cloud_delete':
-					from fenlight.resources.lib.apis.real_debrid_api import RealDebridAPI
+					from apis.real_debrid_api import RealDebridAPI
 					rd_api = RealDebridAPI()
 					function = rd_api.delete_torrent if source['cache_type'] == 'torrent' else rd_api.delete_download
 					result = function(source['folder_id'])

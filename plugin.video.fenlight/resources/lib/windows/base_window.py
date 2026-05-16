@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-from fenlight.resources.lib.modules import kodi_utils
+from modules import kodi_utils
 import xbmcgui
 import re
 import json
 from threading import Thread
 from xml.dom.minidom import parse as mdParse
-from fenlight.resources.lib.modules import settings
-from fenlight.resources.lib.caches.settings_cache import get_setting, set_setting, restore_setting_default
-from fenlight.resources.lib.modules.utils import manual_function_import
+from modules import settings
+from caches.settings_cache import get_setting, set_setting, restore_setting_default
+from modules.utils import manual_function_import
 # logger = kodi_utils.logger
 
 def open_window(import_info, skin_xml, **kwargs):
@@ -54,10 +54,10 @@ def window_manager(obj):
 		try:
 			mode = params['mode']
 			if mode == 'extras_menu_choice':
-				from fenlight.resources.lib.indexers.dialogs import extras_menu_choice
+				from indexers.dialogs import extras_menu_choice
 				extras_menu_choice(params)
 			elif mode == 'person_data_dialog':
-				from fenlight.resources.lib.indexers.people import person_data_dialog
+				from indexers.people import person_data_dialog
 				person_data_dialog(params)
 			else: close()
 		except: close()
@@ -108,10 +108,10 @@ def window_player(obj):
 		try:
 			mode = params['mode']
 			if mode == 'extras_menu_choice':
-				from fenlight.resources.lib.indexers.dialogs import extras_menu_choice
+				from indexers.dialogs import extras_menu_choice
 				extras_menu_choice(params)
 			else:
-				from fenlight.resources.lib.indexers.people import person_data_dialog
+				from indexers.people import person_data_dialog
 				person_data_dialog(params)
 		except: close()
 	try:

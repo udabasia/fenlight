@@ -5,14 +5,14 @@ import json
 from random import shuffle
 from threading import Thread
 from urllib.parse import unquote
-from fenlight.resources.lib.apis.tmdblist_api import tmdb_list_api
-from fenlight.resources.lib.caches.settings_cache import get_setting
-from fenlight.resources.lib.caches.tmdb_lists import tmdb_lists_cache
-from fenlight.resources.lib.indexers.movies import Movies
-from fenlight.resources.lib.indexers.tvshows import TVShows
-from fenlight.resources.lib.modules.utils import paginate_list, sort_for_article, gen_md5, jsondate_to_datetime as js2date
-from fenlight.resources.lib.modules.settings import paginate, page_limit, lists_sort_order, widget_hide_next_page, ignore_articles, jump_to_enabled, tmdblists_sort_order
-from fenlight.resources.lib.modules import kodi_utils
+from apis.tmdblist_api import tmdb_list_api
+from caches.settings_cache import get_setting
+from caches.tmdb_lists import tmdb_lists_cache
+from indexers.movies import Movies
+from indexers.tvshows import TVShows
+from modules.utils import paginate_list, sort_for_article, gen_md5, jsondate_to_datetime as js2date
+from modules.settings import paginate, page_limit, lists_sort_order, widget_hide_next_page, ignore_articles, jump_to_enabled, tmdblists_sort_order
+from modules import kodi_utils
 # logger = kodi_utils.logger
 
 def get_tmdb_lists(params):
@@ -220,7 +220,7 @@ def delete_current_image(custom_image):
 	return True
 
 def tmdb_image_maker(list_name, list_id, image_type, custom_image, shuffle_sort_order):
-	from fenlight.resources.lib.modules.utils import make_image
+	from modules.utils import make_image
 	kodi_utils.show_busy_dialog()
 	content = get_tmdb_list({'list_id': list_id})
 	if shuffle_sort_order: shuffle(content)
@@ -281,7 +281,7 @@ def make_new_tmdb_list(params):
 	external_creation = params.get('external_creation', 'false') == 'true'
 	if not external_creation and kodi_utils.confirm_dialog(heading='TMDb Lists', text='Import a Trakt List to populate this new list?',
 																				ok_label='Yes', cancel_label='No'):
-		from fenlight.resources.lib.apis.trakt_api import get_trakt_list_selection
+		from apis.trakt_api import get_trakt_list_selection
 		chosen_list = get_trakt_list_selection(['default', 'personal'])
 		if chosen_list == None: return
 		suggested_list_name = chosen_list.get('name')
@@ -378,7 +378,7 @@ def cache_delete_list_tmdb(params):
 
 def import_trakt_list_tmdb(params):
 	if not list_change_warning(params['list_name']): return None
-	from fenlight.resources.lib.apis.trakt_api import get_trakt_list_selection
+	from apis.trakt_api import get_trakt_list_selection
 	list_id = params.get('list_id', '')
 	chosen_list = get_trakt_list_selection(['default', 'personal'])
 	if chosen_list == None: return None
@@ -392,7 +392,7 @@ def import_trakt_list_tmdb(params):
 	kodi_utils.notification('Success. Items added' if success else 'Error adding items', 2000)
 
 def process_trakt_list(chosen_list):
-	from fenlight.resources.lib.apis.trakt_api import trakt_fetch_collection_watchlist, get_trakt_list_contents
+	from apis.trakt_api import trakt_fetch_collection_watchlist, get_trakt_list_contents
 	tmdb_media_converter = {'movie': 'movie', 'tvshow': 'tv', 'show': 'tv'}
 	media_type_check = {'movie': 'movie', 'show': 'tvshow', 'tvshow': 'tvshow'}
 	new_contents = []

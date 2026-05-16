@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 import sys
-from fenlight.resources.lib.modules import kodi_utils
-from fenlight.resources.lib.modules import settings
-from fenlight.resources.lib.modules.metadata import tvshow_meta
-from fenlight.resources.lib.modules.utils import get_datetime, adjust_premiered_date, TaskPool
-from fenlight.resources.lib.modules.watched_status import get_database, watched_info_season, get_watched_status_season, get_progress_status_season
+from modules import kodi_utils
+from modules import settings
+from modules.metadata import tvshow_meta
+from modules.utils import get_datetime, adjust_premiered_date, TaskPool
+from modules.watched_status import get_database, watched_info_season, get_watched_status_season, get_progress_status_season
 # logger = kodi_utils.logger
 
 def build_season_list(params):

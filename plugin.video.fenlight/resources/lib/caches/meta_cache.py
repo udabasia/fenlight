@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from fenlight.resources.lib.caches.base_cache import connect_database, get_timestamp
-from fenlight.resources.lib.modules.kodi_utils import get_property, set_property, clear_property
+from caches.base_cache import connect_database, get_timestamp
+from modules.kodi_utils import get_property, set_property, clear_property
 # from modules.kodi_utils import logger
 
 class MetaCache:
@@ -164,7 +164,7 @@ def cache_function(function, prop_string, url, expiration=720, json=True):
 	return result
 
 def delete_meta_cache(silent=False):
-	from fenlight.resources.lib.modules.kodi_utils import confirm_dialog
+	from modules.kodi_utils import confirm_dialog
 	try:
 		if not silent and not confirm_dialog(): return False
 		meta_cache.delete_all()

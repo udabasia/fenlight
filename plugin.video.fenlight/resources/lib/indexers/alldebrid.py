@@ -2,10 +2,10 @@
 import sys
 import json
 from datetime import datetime
-from fenlight.resources.lib.apis.alldebrid_api import AllDebrid
-from fenlight.resources.lib.modules import kodi_utils
-from fenlight.resources.lib.modules.source_utils import supported_video_extensions
-from fenlight.resources.lib.modules.utils import clean_file_name, normalize
+from apis.alldebrid_api import AllDebrid
+from modules import kodi_utils
+from modules.source_utils import supported_video_extensions
+from modules.utils import clean_file_name, normalize
 # logger = kodi_utils.logger
 
 def ad_cloud(folder_id=None):
@@ -141,7 +141,7 @@ def resolve_ad(params):
 	url = params['url']
 	resolved_link = AllDebrid.unrestrict_link(url)
 	if params.get('play', 'false') != 'true' : return resolved_link
-	from fenlight.resources.lib.modules.player import FenLightPlayer
+	from modules.player import FenLightPlayer
 	FenLightPlayer().run(resolved_link, 'video')
 
 def ad_delete(file_id):

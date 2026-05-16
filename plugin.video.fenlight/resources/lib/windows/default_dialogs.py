@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import json
-from fenlight.resources.lib.windows.base_window import BaseDialog
+from windows.base_window import BaseDialog
 # from modules.kodi_utils import logger
 
 class Select(BaseDialog):

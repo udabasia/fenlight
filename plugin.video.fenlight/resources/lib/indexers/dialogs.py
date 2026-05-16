@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import json
-from fenlight.resources.lib.caches.settings_cache import get_setting, set_setting, set_default, default_setting_values
-from fenlight.resources.lib.modules import kodi_utils
-from fenlight.resources.lib.modules import settings
+from caches.settings_cache import get_setting, set_setting, set_default, default_setting_values
+from modules import kodi_utils
+from modules import settings
 # logger = kodi_utils.logger
 
 def window_theme_choice(params):
@@ -57,7 +57,7 @@ def navigate_to_page_choice(params):
 	except: return
 
 def list_display_order_choice(params):
-	from fenlight.resources.lib.modules.meta_lists import list_display_choices
+	from modules.meta_lists import list_display_choices
 	list_type = params['list_type']
 	info = list_display_choices(list_type)
 	choices = info['choices']
@@ -209,7 +209,7 @@ def context_menu_order_choice(params):
 	return context_menu_order_choice(params)
 
 def personallists_manager_choice(params):
-	from fenlight.resources.lib.indexers.personal_lists import get_all_personal_lists, make_new_personal_list, new_list_check
+	from indexers.personal_lists import get_all_personal_lists, make_new_personal_list, new_list_check
 	icon = params.get('icon', None) or kodi_utils.get_icon('lists')
 	list_type = params['list_type']
 	all_lists = get_all_personal_lists(get_setting('fenlight.personal_list.list_sort', '0'))
@@ -235,14 +235,14 @@ def personallists_manager_choice(params):
 	if action == 'add': new_contents = {'media_id': params['tmdb_id'], 'title': params['title'], 'type': list_type,
 										'release_date': params['premiered'], 'date_added': params['current_time']}
 	else: new_contents = params['tmdb_id']
-	from fenlight.resources.lib.caches.personal_lists_cache import personal_lists_cache
+	from caches.personal_lists_cache import personal_lists_cache
 	result = personal_lists_cache.add_remove_list_item(list_name, author, action, new_contents)
 	kodi_utils.notification(result, 3000)
 	if action == 'remove' and any([kodi_utils.path_check(list_name) or kodi_utils.external()]): kodi_utils.kodi_refresh()
 
 def tmdblists_manager_choice(params):
-	from fenlight.resources.lib.caches.tmdb_lists import tmdb_lists_cache
-	from fenlight.resources.lib.indexers.tmdb_lists import get_all_tmdb_lists, make_new_tmdb_list, add_to_tmdb_list, remove_from_tmdb_list, check_item_status, check_item_status_watchfav, add_remove_watchfavs
+	from caches.tmdb_lists import tmdb_lists_cache
+	from indexers.tmdb_lists import get_all_tmdb_lists, make_new_tmdb_list, add_to_tmdb_list, remove_from_tmdb_list, check_item_status, check_item_status_watchfav, add_remove_watchfavs
 	icon = params.get('icon', None) or kodi_utils.get_icon('tmdb')
 	media_type, tmdb_id = params['media_type'], params['tmdb_id']
 	choices = [('Add To TMDb List...', 'list_add'), ('Remove From TMDb List...', 'list_remove'), ('Add To [B]NEW[/B] TMDb List...', 'list_add_new'),
@@ -253,7 +253,7 @@ def tmdblists_manager_choice(params):
 	action = kodi_utils.select_dialog([i[1] for i in choices], **kwargs)
 	if action == None: return
 	if action.startswith(('watchlist', 'favorites')):
-		from fenlight.resources.lib.indexers.tmdb_lists import check_item_status_watchfav
+		from indexers.tmdb_lists import check_item_status_watchfav
 		list_id = action.split('_')[0]
 		status = True if 'add' in action else False
 		item_in_list = check_item_status_watchfav(list_id, media_type, tmdb_id)
@@ -262,7 +262,7 @@ def tmdblists_manager_choice(params):
 		success = add_remove_watchfavs(media_type, tmdb_id, list_id, status)
 		tmdb_lists_cache.clear_watchfavrecs(list_id, media_type)
 	else:
-		from fenlight.resources.lib.indexers.tmdb_lists import get_all_tmdb_lists, make_new_tmdb_list, add_to_tmdb_list, remove_from_tmdb_list, check_item_status
+		from indexers.tmdb_lists import get_all_tmdb_lists, make_new_tmdb_list, add_to_tmdb_list, remove_from_tmdb_list, check_item_status
 		all_lists = get_all_tmdb_lists('0')
 		if not all_lists: action = 'list_add_new'
 		if action == 'list_add_new':
@@ -289,7 +289,7 @@ def tmdblists_manager_choice(params):
 	if 'remove' in action and any([kodi_utils.path_check(str(list_id)) or kodi_utils.external()]): kodi_utils.kodi_refresh()
 
 def favorites_manager_choice(params):
-	from fenlight.resources.lib.caches.favorites_cache import favorites_cache
+	from caches.favorites_cache import favorites_cache
 	media_type, tmdb_id, title = params.get('media_type'), params.get('tmdb_id'), params.get('title')
 	current_favorites = favorites_cache.get_favorites(media_type)
 	people_favorite = media_type == 'people'
@@ -328,7 +328,7 @@ def ai_model_order_choice(params):
 	kwargs = {'items': json.dumps(choices), 'multi_line': 'true', 'heading': 'Choose Model for Position %02d' % display_position}
 	choice = kodi_utils.select_dialog(choices, **kwargs)
 	if choice != None:
-		from fenlight.resources.lib.caches.lists_cache import lists_cache
+		from caches.lists_cache import lists_cache
 		lists_cache.delete_like("ai_similar_%")
 		model_id = choice['model_id']
 		current_order.remove(model_id)
@@ -363,7 +363,7 @@ def extras_order_choice(params={}):
 	choice = kodi_utils.select_dialog(choices, **kwargs)
 	if choice == None:
 		if params.get('remake', False):
-			from fenlight.resources.lib.windows.base_window import ExtrasUtils
+			from windows.base_window import ExtrasUtils
 			ExtrasUtils().run()
 		return
 	current_item = choice['current_item']
@@ -382,7 +382,7 @@ def extras_order_choice(params={}):
 	return extras_order_choice(params)
 
 def preferred_filters_choice(params):
-	from fenlight.resources.lib.modules.source_utils import source_filters, include_exclude_filters
+	from modules.source_utils import source_filters, include_exclude_filters
 	def _default_choices():
 		return [{'name': '1st Sort', 'value': 'Choose 1st Sort Param'}, {'name': '2nd Sort', 'value': 'Choose 2nd Sort Param'},
 				{'name': '3rd Sort', 'value': 'Choose 3rd Sort Param'}, {'name': '4th Sort', 'value': 'Choose 4th Sort Param'},
@@ -433,7 +433,7 @@ def preferred_filters_choice(params):
 	return preferred_filters_choice({'choices': choices})
 
 def tmdb_api_check_choice(params):
-	from fenlight.resources.lib.apis.tmdb_api import movie_details
+	from apis.tmdb_api import movie_details
 	data = movie_details('299534', settings.tmdb_api_key())
 	if not data.get('success', True): text = 'There is an issue with your API Key.[CR][B]"Error: %s"[/B]' % data.get('status_message', '')
 	else: text = 'Your TMDb API Key is enabled and working'
@@ -478,7 +478,7 @@ def limit_number_total_choice(params):
 	set_setting('results.limit_number_total_name', choice['name'])
 
 def external_scraper_choice(params):
-	from fenlight.resources.lib.modules.utils import append_module_to_syspath, manual_function_import
+	from modules.utils import append_module_to_syspath, manual_function_import
 	try:
 		results = kodi_utils.jsonrpc_get_addons('xbmc.python.module')
 		results = [i for i in results if kodi_utils.addon_enabled(i['addonid'])]
@@ -507,7 +507,7 @@ def external_scraper_choice(params):
 		return external_scraper_choice(params)
 
 def audio_filters_choice(params={}):
-	from fenlight.resources.lib.modules.source_utils import audio_filter_choices
+	from modules.source_utils import audio_filter_choices
 	icon = kodi_utils.get_icon('audio')
 	audio_filters = audio_filter_choices()
 	list_items = [{'line1': item[0], 'line2': item[1], 'icon': icon} for item in audio_filters]
@@ -535,7 +535,7 @@ def keywords_choice(params):
 	if keywords: keywords = keywords.get('keywords') or keywords.get('results')
 	else:
 		kodi_utils.show_busy_dialog()
-		from fenlight.resources.lib.apis.tmdb_api import tmdb_movie_keywords, tmdb_tv_keywords
+		from apis.tmdb_api import tmdb_movie_keywords, tmdb_tv_keywords
 		if media_type == 'movie': function, key = tmdb_movie_keywords, 'keywords'
 		else: function, key = tmdb_tv_keywords, 'results'
 		try: keywords = function(tmdb_id)[key]
@@ -557,7 +557,7 @@ def random_choice(params):
 	choice = kodi_utils.select_dialog(choices, **kwargs)
 	if return_choice == 'true': return choice
 	if choice == None: return
-	from fenlight.resources.lib.modules.episode_tools import EpisodeTools
+	from modules.episode_tools import EpisodeTools
 	exec('EpisodeTools(meta).%s()' % choice)
 
 def trakt_manager_choice(params):
@@ -571,7 +571,7 @@ def trakt_manager_choice(params):
 	kwargs = {'items': json.dumps(list_items), 'heading': 'Trakt Lists Manager'}
 	choice = kodi_utils.select_dialog([i[1] for i in choices], **kwargs)
 	if choice == None: return
-	from fenlight.resources.lib.apis import trakt_api
+	from apis import trakt_api
 	if media_type == 'movie': key, media_key, media_id = ('movies', 'tmdb', int(tmdb_id))
 	else:
 		key = 'shows'
@@ -588,7 +588,7 @@ def trakt_manager_choice(params):
 	trakt_api.add_to_list(selected['user'], selected['slug'], data) if choice == 'add' else trakt_api.remove_from_list(selected['user'], selected['slug'], data)
 
 def episode_groups_choice(params):
-	from fenlight.resources.lib.modules.metadata import episode_groups
+	from modules.metadata import episode_groups
 	episode_group_types = {1: 'Original Air Date', 2: 'Absolute', 3: 'DVD', 4: 'Digital', 5: 'Story Arc', 6: 'Production', 7: 'TV'}
 	meta = params.get('meta')
 	poster = params.get('poster') or kodi_utils.get_icon('box_office')
@@ -603,8 +603,8 @@ def episode_groups_choice(params):
 	return choice
 
 def assign_episode_group_choice(params):
-	from fenlight.resources.lib.caches.episode_groups_cache import episode_groups_cache
-	from fenlight.resources.lib.modules import metadata
+	from caches.episode_groups_cache import episode_groups_cache
+	from modules import metadata
 	tmdb_id = params['meta']['tmdb_id']
 	current_group = episode_groups_cache.get(tmdb_id)
 	if current_group:
@@ -621,10 +621,10 @@ def assign_episode_group_choice(params):
 	kodi_utils.notification('Success', 2000)
 
 def playback_choice(params):
-	from fenlight.resources.lib.modules.utils import get_datetime
-	from fenlight.resources.lib.modules.debrid import debrid_for_ext_cache_check
-	from fenlight.resources.lib.modules.source_utils import get_aliases_titles, make_alias_dict
-	from fenlight.resources.lib.modules import metadata
+	from modules.utils import get_datetime
+	from modules.debrid import debrid_for_ext_cache_check
+	from modules.source_utils import get_aliases_titles, make_alias_dict
+	from modules import metadata
 	media_type, season, episode, episode_id = params.get('media_type'), params.get('season', ''), params.get('episode', ''), params.get('episode_id', None)
 	playcount = params.get('playcount', '0')
 	playback_key = settings.playback_key()
@@ -654,8 +654,8 @@ def playback_choice(params):
 	if choice == None: return kodi_utils.notification('Cancelled', 2500)
 	if choice in ('clear_and_rescrape', 'scrape_with_custom_values'):
 		kodi_utils.show_busy_dialog()
-		from fenlight.resources.lib.caches.base_cache import clear_cache
-		from fenlight.resources.lib.caches.external_cache import ExternalCache
+		from caches.base_cache import clear_cache
+		from caches.external_cache import ExternalCache
 		clear_cache('internal_scrapers', silent=True)
 		ExternalCache().delete_cache_single(media_type, str(meta['tmdb_id']))
 		kodi_utils.hide_busy_dialog()
@@ -674,7 +674,7 @@ def playback_choice(params):
 			play_params = {'mode': play_mode, 'media_type': 'episode', 'tmdb_id': meta['tmdb_id'], 'season': season, 'episode': episode,
 							'external_cache_check': check_cache_toggle, 'prescrape': 'false'}
 	elif choice == 'clear_debrid_cache_and_show':
-		from fenlight.resources.lib.caches.debrid_cache import debrid_cache
+		from caches.debrid_cache import debrid_cache
 		debrid_cache.clear_cache()	
 		if media_type == 'movie': play_params = {'mode': play_mode, 'media_type': 'movie', 'tmdb_id': meta['tmdb_id'], 'autoplay': 'false', 'prescrape': 'false'}
 		else: play_params = {'mode': play_mode, 'media_type': 'episode', 'tmdb_id': meta['tmdb_id'],
@@ -748,7 +748,7 @@ def playback_choice(params):
 	else: episodes_data = metadata.episodes_meta(orig_season, meta)
 	if media_type == 'episode': play_params['playcount'] = playcount
 	play_params[playback_key] = playback_key
-	from fenlight.resources.lib.modules.sources import Sources
+	from modules.sources import Sources
 	Sources().playback_prep(play_params)
 
 def set_quality_choice(params):
@@ -840,7 +840,7 @@ def extras_ratings_choice(params={}):
 	set_setting('extras.enabled_ratings', ', '.join([i[1] for i in selection]))
 
 def set_language_filter_choice(params):
-	from fenlight.resources.lib.modules.meta_lists import language_choices
+	from modules.meta_lists import language_choices
 	filter_setting_id, multi_choice, include_none = params.get('filter_setting_id'), params.get('multi_choice', 'false'), params.get('include_none', 'false')
 	lang_choices = language_choices()
 	if include_none == 'false': lang_choices.pop('None')
@@ -873,7 +873,7 @@ def enable_scrapers_choice(params={}):
 		if i in cloud_scrapers and i in choice: set_setting(cloud_scrapers[i], 'true')
 
 def sources_folders_choice(params):
-	from fenlight.resources.lib.windows.base_window import open_window
+	from windows.base_window import open_window
 	return open_window(('windows.settings_manager', 'SettingsManagerFolders'), 'settings_manager_folders.xml')
 
 def results_sorting_choice(params):
@@ -903,7 +903,7 @@ def clear_favorites_choice(params):
 	media_type = kodi_utils.select_dialog([item[1] for item in fl], **kwargs)
 	if media_type == None: return
 	if not kodi_utils.confirm_dialog(): return
-	from fenlight.resources.lib.caches.favorites_cache import favorites_cache
+	from caches.favorites_cache import favorites_cache
 	favorites_cache.clear_favorites(media_type)
 	kodi_utils.notification('Success', 3000)
 
@@ -928,18 +928,18 @@ def personal_list_unseen_color_choice(params):
 	if chosen_color: set_setting(setting, chosen_color)
 
 def color_choice(params):
-	from fenlight.resources.lib.windows.base_window import open_window
+	from windows.base_window import open_window
 	return open_window(('windows.color', 'SelectColor'), 'color.xml', current_setting=params.get('current_setting', None))
 
 def mpaa_region_choice(params={}):
-	from fenlight.resources.lib.modules.meta_lists import regions as rg
+	from modules.meta_lists import regions as rg
 	regions = rg()
 	regions.sort(key=lambda x: x['name'])
 	list_items = [{'line1': i['name']} for i in regions]
 	kwargs = {'items': json.dumps(list_items), 'heading': 'Set MPAA Region', 'narrow_window': 'true'}
 	choice = kodi_utils.select_dialog(regions, **kwargs)
 	if choice == None: return None
-	from fenlight.resources.lib.caches.meta_cache import delete_meta_cache
+	from caches.meta_cache import delete_meta_cache
 	set_setting('mpaa_region', choice['id'])
 	set_setting('mpaa_region_display_name', choice['name'])
 	delete_meta_cache(silent=True)
@@ -956,9 +956,9 @@ def lists_cache_duration_choice(params={}):
 	set_setting('lists_cache_duraton_display_name', choice['name'])
 
 def options_menu_choice(params, meta=None):
-	from fenlight.resources.lib.caches.episode_groups_cache import episode_groups_cache
-	from fenlight.resources.lib.modules.utils import get_datetime
-	from fenlight.resources.lib.modules import metadata
+	from caches.episode_groups_cache import episode_groups_cache
+	from modules.utils import get_datetime
+	from modules import metadata
 	params_get = params.get
 	tmdb_id, content, poster = params_get('tmdb_id', None), params_get('content', None), params_get('poster', None)
 	is_external, from_extras = params_get('is_external') in (True, 'True', 'true'), params_get('from_extras', 'false') == 'true'
@@ -1020,14 +1020,14 @@ def options_menu_choice(params, meta=None):
 	choice = kodi_utils.select_dialog([i[2] for i in listing], **kwargs)
 	if choice == None: return
 	if choice == 'clear_media_cache':
-		from fenlight.resources.lib.caches.base_cache import refresh_cached_data
+		from caches.base_cache import refresh_cached_data
 		kodi_utils.close_all_dialog()
 		return refresh_cached_data(meta)
 	if choice == 'clear_scrapers_cache':
-		from fenlight.resources.lib.modules.source_utils import clear_scrapers_cache
+		from modules.source_utils import clear_scrapers_cache
 		return clear_scrapers_cache()
 	if choice == 'open_download_manager':
-		from fenlight.resources.lib.modules.downloader import manager
+		from modules.downloader import manager
 		kodi_utils.close_all_dialog()
 		return manager()
 	if choice == 'open_tools':
@@ -1049,7 +1049,7 @@ def options_menu_choice(params, meta=None):
 	if choice == 'trakt_manager':
 		return trakt_manager_choice({'tmdb_id': tmdb_id, 'imdb_id': imdb_id, 'tvdb_id': tvdb_id or 'None', 'media_type': content, 'icon': poster})
 	if choice == 'personallists_manager_choice':
-		from fenlight.resources.lib.modules.utils import get_current_timestamp
+		from modules.utils import get_current_timestamp
 		return personallists_manager_choice({'list_type': content, 'tmdb_id': tmdb_id, 'title': title,
 							'premiered': meta_get('premiered'), 'current_time': get_current_timestamp(), 'icon': poster})
 	if choice == 'favorites_manager_choice':
@@ -1071,9 +1071,9 @@ def options_menu_choice(params, meta=None):
 	options_menu_choice(params, meta=meta)
 
 def extras_menu_choice(params):
-	from fenlight.resources.lib.windows.base_window import open_window
-	from fenlight.resources.lib.modules.utils import get_datetime
-	from fenlight.resources.lib.modules import metadata
+	from windows.base_window import open_window
+	from modules.utils import get_datetime
+	from modules import metadata
 	stacked = params.get('stacked', 'false') == 'true'
 	if not stacked: kodi_utils.show_busy_dialog()
 	media_type = params['media_type']
@@ -1089,8 +1089,8 @@ def open_movieset_choice(params):
 	return window_function({'mode': 'build_movie_list', 'action': 'tmdb_movies_sets', 'key_id': params['key_id'], 'name': params['name']})
 
 def media_extra_info_choice(params):
-	from fenlight.resources.lib.modules.utils import adjust_premiered_date
-	from fenlight.resources.lib.modules.source_utils import get_aliases_titles, make_alias_dict
+	from modules.utils import adjust_premiered_date
+	from modules.source_utils import get_aliases_titles, make_alias_dict
 	media_type, meta = params.get('media_type'), params.get('meta')
 	extra_info, listings = meta.get('extra_info', None), []
 	append = listings.append
@@ -1143,5 +1143,5 @@ def media_extra_info_choice(params):
 	return '[CR][CR]'.join(listings)
 
 def discover_choice(params):
-	from fenlight.resources.lib.windows.base_window import open_window
+	from windows.base_window import open_window
 	open_window(('windows.discover', 'Discover'), 'discover.xml', media_type=params['media_type'])

@@ -18,7 +18,7 @@ import re
 import math
 import codecs
 from collections import namedtuple
-from fenlight.resources.lib.segno import consts
+from segno import consts
 from itertools import zip_longest
 import sys
 _MAX_PENALTY_SCORE = sys.maxsize

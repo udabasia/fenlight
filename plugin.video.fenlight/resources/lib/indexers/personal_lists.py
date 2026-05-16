@@ -5,14 +5,14 @@ import json
 from random import shuffle
 from threading import Thread
 from urllib.parse import unquote
-from fenlight.resources.lib.caches.settings_cache import get_setting
-from fenlight.resources.lib.caches.personal_lists_cache import personal_lists_cache
-from fenlight.resources.lib.indexers.movies import Movies
-from fenlight.resources.lib.indexers.tvshows import TVShows
-from fenlight.resources.lib.modules import kodi_utils
-from fenlight.resources.lib.modules import metadata
-from fenlight.resources.lib.modules import settings
-from fenlight.resources.lib.modules.utils import TaskPool, paginate_list, sort_for_article, get_datetime, get_current_timestamp, make_image, download_image
+from caches.settings_cache import get_setting
+from caches.personal_lists_cache import personal_lists_cache
+from indexers.movies import Movies
+from indexers.tvshows import TVShows
+from modules import kodi_utils
+from modules import metadata
+from modules import settings
+from modules.utils import TaskPool, paginate_list, sort_for_article, get_datetime, get_current_timestamp, make_image, download_image
 # logger = kodi_utils.logger
 
 def get_personal_lists(params):
@@ -197,7 +197,7 @@ def make_new_personal_list(params):
 	chosen_list, suggested_list_name, suggested_author = params.get('chosen_list', []), params.get('suggested_list_name', ''), params.get('suggested_author', '')
 	if not external_creation and not is_retry and kodi_utils.confirm_dialog(
 		heading='Personal Lists',text='Import a Trakt List to populate this new list?', ok_label='Yes', cancel_label='No'):
-		from fenlight.resources.lib.apis.trakt_api import get_trakt_list_selection
+		from apis.trakt_api import get_trakt_list_selection
 		chosen_list = get_trakt_list_selection(['default', 'personal', 'liked'])
 		if chosen_list == None: return None, None
 		params['chosen_list'] = chosen_list
@@ -359,7 +359,7 @@ def import_trakt_list(params):
 	list_name, author, description, sort_order, seen = params['list_name'], params['author'], params['description'], params['sort_order'], params['seen']
 	poster, fanart = params['poster'], params['fanart']
 	if not list_change_warning(list_name): return
-	from fenlight.resources.lib.apis.trakt_api import get_trakt_list_selection, trakt_fetch_collection_watchlist, get_trakt_list_contents
+	from apis.trakt_api import get_trakt_list_selection, trakt_fetch_collection_watchlist, get_trakt_list_contents
 	chosen_list = get_trakt_list_selection(['default', 'personal', 'liked'])
 	if chosen_list == None: return
 	trakt_list_name = chosen_list.get('name')
@@ -371,7 +371,7 @@ def import_trakt_list(params):
 	kodi_utils.notification(result, 3000)
 
 def process_trakt_list(chosen_list):
-	from fenlight.resources.lib.apis.trakt_api import trakt_fetch_collection_watchlist, get_trakt_list_contents
+	from apis.trakt_api import trakt_fetch_collection_watchlist, get_trakt_list_contents
 	media_type_check = {'movie': 'movie', 'show': 'tvshow', 'tvshow': 'tvshow'}
 	new_contents = []
 	new_contents_append = new_contents.append

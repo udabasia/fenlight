@@ -5,11 +5,11 @@ import time
 import requests
 from threading import Thread
 from urllib.parse import urlencode
-from fenlight.resources.lib.caches.main_cache import cache_object
-from fenlight.resources.lib.caches.settings_cache import get_setting, set_setting
-from fenlight.resources.lib.modules.utils import copy2clip, make_qrcode
-from fenlight.resources.lib.modules.source_utils import supported_video_extensions, seas_ep_filter, extras
-from fenlight.resources.lib.modules.kodi_utils import sleep, ok_dialog, progress_dialog, notification
+from caches.main_cache import cache_object
+from caches.settings_cache import get_setting, set_setting
+from modules.utils import copy2clip, make_qrcode
+from modules.source_utils import supported_video_extensions, seas_ep_filter, extras
+from modules.kodi_utils import sleep, ok_dialog, progress_dialog, notification
 # logger = kodi_utils.logger
 
 class PremiumizeAPI:
@@ -118,7 +118,7 @@ class PremiumizeAPI:
 		except: return None
 
 	def display_magnet_pack(self, magnet_url, info_hash):
-		from fenlight.resources.lib.modules.source_utils import supported_video_extensions
+		from modules.source_utils import supported_video_extensions
 		try:
 			end_results = []
 			append = end_results.append
@@ -208,8 +208,8 @@ class PremiumizeAPI:
 
 	def clear_cache(self, clear_hashes=True):
 		try:
-			from fenlight.resources.lib.caches.debrid_cache import debrid_cache
-			from fenlight.resources.lib.caches.base_cache import connect_database
+			from caches.debrid_cache import debrid_cache
+			from caches.base_cache import connect_database
 			dbcon = connect_database('maincache_db')
 			user_cloud_success = False
 			# USER CLOUD

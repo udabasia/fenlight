@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-from fenlight.resources.lib.caches.debrid_cache import debrid_cache
-from fenlight.resources.lib.apis.real_debrid_api import RealDebridAPI
-from fenlight.resources.lib.apis.premiumize_api import PremiumizeAPI
-from fenlight.resources.lib.apis.alldebrid_api import AllDebridAPI
-from fenlight.resources.lib.apis.torbox_api import TorBoxAPI
-from fenlight.resources.lib.modules.source_utils import get_external_cache_status
-from fenlight.resources.lib.modules.kodi_utils import show_busy_dialog, hide_busy_dialog, notification
-from fenlight.resources.lib.modules.settings import enabled_debrids_check
+from caches.debrid_cache import debrid_cache
+from apis.real_debrid_api import RealDebridAPI
+from apis.premiumize_api import PremiumizeAPI
+from apis.alldebrid_api import AllDebridAPI
+from apis.torbox_api import TorBoxAPI
+from modules.source_utils import get_external_cache_status
+from modules.kodi_utils import show_busy_dialog, hide_busy_dialog, notification
+from modules.settings import enabled_debrids_check
 # from modules.kodi_utils import logger
 
 def debrid_enabled():

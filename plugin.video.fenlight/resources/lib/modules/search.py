@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 import json
 from urllib.parse import unquote
-from fenlight.resources.lib.caches.main_cache import main_cache
-from fenlight.resources.lib.indexers.people import person_search
-from fenlight.resources.lib.indexers.easynews import search_easynews_image
-from fenlight.resources.lib.modules.kodi_utils import close_all_dialog, external, build_url, kodi_dialog, execute_builtin, select_dialog, notification, kodi_refresh
+from caches.main_cache import main_cache
+from indexers.people import person_search
+from indexers.easynews import search_easynews_image
+from modules.kodi_utils import close_all_dialog, external, build_url, kodi_dialog, execute_builtin, select_dialog, notification, kodi_refresh
 # from modules.kodi_utils import logger
 
 def get_key_id(params):

@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from xml.dom.minidom import parseString as mdParse
-from fenlight.resources.lib.caches.meta_cache import meta_cache
-from fenlight.resources.lib.modules.metadata import movie_expiry, tvshow_expiry
-from fenlight.resources.lib.modules.utils import get_datetime, get_current_timestamp
-from fenlight.resources.lib.modules.kodi_utils import make_session
+from caches.meta_cache import meta_cache
+from modules.metadata import movie_expiry, tvshow_expiry
+from modules.utils import get_datetime, get_current_timestamp
+from modules.kodi_utils import make_session
 # from modules.kodi_utils import logger
 
 session = make_session('http://www.omdbapi.com/')

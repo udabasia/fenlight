@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
-from fenlight.resources.lib.modules import kodi_utils
-from fenlight.resources.lib.caches.base_cache import connect_database
+from modules import kodi_utils
+from caches.base_cache import connect_database
 # logger = kodi_utils.logger
 
 class SettingsCache:

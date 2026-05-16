@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 import sys
 from urllib.parse import unquote
-from fenlight.resources.lib.apis.tmdb_api import tmdb_people_info
-from fenlight.resources.lib.windows.base_window import open_window
-from fenlight.resources.lib.indexers.images import Images
-from fenlight.resources.lib.modules.kodi_utils import add_items, set_content, set_category, end_directory, build_url, make_listitem, get_icon, get_addon_fanart
+from apis.tmdb_api import tmdb_people_info
+from windows.base_window import open_window
+from indexers.images import Images
+from modules.kodi_utils import add_items, set_content, set_category, end_directory, build_url, make_listitem, get_icon, get_addon_fanart
 # from modules.kodi_utils import logger
 
 def tmdb_people(params):

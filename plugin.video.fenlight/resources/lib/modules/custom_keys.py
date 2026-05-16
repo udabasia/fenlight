@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from urllib.parse import parse_qsl
-from fenlight.resources.lib.modules.kodi_utils import get_infolabel, activate_window, container_update, hide_busy_dialog
-from fenlight.resources.lib.indexers import dialogs
+from modules.kodi_utils import get_infolabel, activate_window, container_update, hide_busy_dialog
+from indexers import dialogs
 # from modules.kodi_utils import logger
 
 def extras_menu():

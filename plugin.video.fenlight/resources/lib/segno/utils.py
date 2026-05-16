@@ -11,7 +11,7 @@ Utility functions useful for writers or QR Code objects.
 DOES NOT belong to the public API.
 """
 from itertools import chain, repeat
-from fenlight.resources.lib.segno import consts
+from segno import consts
 
 __all__ = ('get_default_border_size', 'get_border', 'get_symbol_size',
            'check_valid_scale', 'check_valid_border', 'matrix_to_lines',
@@ -168,7 +168,7 @@ def matrix_iter_verbose(matrix, matrix_size, scale=1, border=None):
             default quiet zone (4 for QR Codes, 2 for Micro QR Codes).
     :raises: :py:exc:`ValueError` if an illegal scale or border value is provided
     """
-    from fenlight.resources.lib.segno import encoder
+    from segno import encoder
     check_valid_border(border)
     scale = int(scale)
     check_valid_scale(scale)

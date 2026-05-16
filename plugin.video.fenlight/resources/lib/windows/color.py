@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from fenlight.resources.lib.windows.base_window import BaseDialog
-from fenlight.resources.lib.modules.meta_lists import color_palette
-from fenlight.resources.lib.modules.kodi_utils import kodi_dialog, ok_dialog
+from windows.base_window import BaseDialog
+from modules.meta_lists import color_palette
+from modules.kodi_utils import kodi_dialog, ok_dialog
 # from modules.kodi_utils import logger
 
 class SelectColor(BaseDialog):

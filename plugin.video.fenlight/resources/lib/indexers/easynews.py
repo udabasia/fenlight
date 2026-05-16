@@ -2,12 +2,12 @@
 import sys
 from datetime import datetime
 from urllib.parse import unquote, urlencode, quote
-from fenlight.resources.lib.modules.settings import easynews_playback_method
-from fenlight.resources.lib.modules.utils import jsondate_to_datetime
-from fenlight.resources.lib.apis.easynews_api import EasyNews
-from fenlight.resources.lib.indexers.images import Images
-from fenlight.resources.lib.modules import kodi_utils
-from fenlight.resources.lib.modules.utils import clean_file_name
+from modules.settings import easynews_playback_method
+from modules.utils import jsondate_to_datetime
+from apis.easynews_api import EasyNews
+from indexers.images import Images
+from modules import kodi_utils
+from modules.utils import clean_file_name
 # logger = kodi_utils.logger
 
 def search_easynews_image(key_id=None):
@@ -66,7 +66,7 @@ def resolve_easynews(params):
 	use_non_seekable = easynews_playback_method(query)
 	resolved_link = EasyNews.resolve_easynews(params['url_dl'], use_non_seekable)
 	if not direct_play: return resolved_link
-	from fenlight.resources.lib.modules.player import FenLightPlayer
+	from modules.player import FenLightPlayer
 	FenLightPlayer().run(resolved_link, 'video')
 
 def account_info(params):

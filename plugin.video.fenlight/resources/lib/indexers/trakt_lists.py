@@ -4,15 +4,15 @@ import sys
 import json
 from random import shuffle
 from threading import Thread
-from fenlight.resources.lib.apis.trakt_api import trakt_get_lists, trakt_search_lists, get_trakt_list_contents, trakt_lists_with_media
-from fenlight.resources.lib.caches.trakt_cache import get_all_lists_custom_sort, set_list_custom_sort, delete_list_custom_sort
-from fenlight.resources.lib.indexers.movies import Movies
-from fenlight.resources.lib.indexers.tvshows import TVShows
-from fenlight.resources.lib.indexers.seasons import single_seasons
-from fenlight.resources.lib.indexers.episodes import build_single_episode
-from fenlight.resources.lib.modules import kodi_utils
-from fenlight.resources.lib.modules.utils import paginate_list, gen_md5, get_datetime, get_current_timestamp
-from fenlight.resources.lib.modules.settings import paginate, page_limit, widget_hide_next_page, tmdb_api_key, mpaa_region, jump_to_enabled
+from apis.trakt_api import trakt_get_lists, trakt_search_lists, get_trakt_list_contents, trakt_lists_with_media
+from caches.trakt_cache import get_all_lists_custom_sort, set_list_custom_sort, delete_list_custom_sort
+from indexers.movies import Movies
+from indexers.tvshows import TVShows
+from indexers.seasons import single_seasons
+from indexers.episodes import build_single_episode
+from modules import kodi_utils
+from modules.utils import paginate_list, gen_md5, get_datetime, get_current_timestamp
+from modules.settings import paginate, page_limit, widget_hide_next_page, tmdb_api_key, mpaa_region, jump_to_enabled
 # logger = kodi_utils.logger
 
 def search_trakt_lists(params):
@@ -301,9 +301,9 @@ def make_custom_artwork(params):
 	kodi_utils.kodi_refresh()
 
 def trakt_image_maker(list_name, list_type, list_id, image_type, user, slug, custom_image, shuffle_sort_order):
-	from fenlight.resources.lib.caches.trakt_cache import get_list_custom_sort
-	from fenlight.resources.lib.modules import metadata
-	from fenlight.resources.lib.modules.utils import make_image
+	from caches.trakt_cache import get_list_custom_sort
+	from modules import metadata
+	from modules.utils import make_image
 	kodi_utils.show_busy_dialog()
 	sort_info = get_list_custom_sort(list_id)
 	sort_by, sort_how = sort_info['sort_by'], sort_info['sort_how']
@@ -344,7 +344,7 @@ def set_list_custom_sort(params):
 	sort_by = kodi_utils.select_dialog([i[0] for i in choices], **kwargs)
 	if sort_by == None: return
 	if sort_by == 'default':
-		from fenlight.resources.lib.caches.trakt_cache import delete_list_custom_sort
+		from caches.trakt_cache import delete_list_custom_sort
 		success = delete_list_custom_sort(list_id)
 		if success:
 			kodi_utils.ok_dialog('Trakt List Custom Sort', 'Success')
@@ -358,7 +358,7 @@ def set_list_custom_sort(params):
 		kwargs = {'items': json.dumps(list_items), 'heading': 'Trakt List Custom Sort How', 'narrow_window': 'true'}
 		sort_how = kodi_utils.select_dialog([i[0] for i in choices], **kwargs)
 		if sort_how == None: return
-	from fenlight.resources.lib.caches.trakt_cache import set_list_custom_sort
+	from caches.trakt_cache import set_list_custom_sort
 	success = set_list_custom_sort(list_id, {'list_id': list_id, 'sort_by': sort_by, 'sort_how': sort_how})
 	if success:
 		kodi_utils.ok_dialog('Trakt List Custom Sort', 'Success')

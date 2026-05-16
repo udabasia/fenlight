@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from fenlight.resources.lib.windows.base_window import BaseDialog
+from windows.base_window import BaseDialog
 # from modules.kodi_utils import logger
 
 class SettingsManager(BaseDialog):

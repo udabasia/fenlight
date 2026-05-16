@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 import datetime
-from fenlight.resources.lib.caches.meta_cache import cache_function
-from fenlight.resources.lib.caches.lists_cache import lists_cache_object
-from fenlight.resources.lib.modules.settings import get_meta_filter, tmdb_api_key, lists_cache_duraton
-from fenlight.resources.lib.modules.kodi_utils import make_session, remove_keys
+from caches.meta_cache import cache_function
+from caches.lists_cache import lists_cache_object
+from modules.settings import get_meta_filter, tmdb_api_key, lists_cache_duraton
+from modules.kodi_utils import make_session, remove_keys
 # from modules.kodi_utils import logger
 
 session = make_session('https://api.themoviedb.org/3')
@@ -12,7 +12,7 @@ def tmdb_dict_removals():
 	return ('adult', 'backdrop_path', 'genre_ids', 'original_language', 'original_title', 'overview', 'popularity', 'vote_count', 'video', 'origin_country', 'original_name')
 
 def no_api_key():
-	from fenlight.resources.lib.modules.kodi_utils import notification
+	from modules.kodi_utils import notification
 	notification('Please set a valid TMDb API Key')
 	return []
 
@@ -71,7 +71,7 @@ def tvshow_external_id(external_source, external_id, api_key):
 	except: return None
 
 def tmdb_movies_oscar_winners(page_no):
-	from fenlight.resources.lib.modules.meta_lists import oscar_winners
+	from modules.meta_lists import oscar_winners
 	return oscar_winners()[page_no-1]
 
 def tmdb_network_details(network_id):
@@ -438,7 +438,7 @@ def tmdb_anime_popular(page_no):
 	return lists_cache_object(get_data, string, url)
 
 def tmdb_anime_popular_recent(page_no):
-	from fenlight.resources.lib.modules.meta_lists import years_tvshows
+	from modules.meta_lists import years_tvshows
 	api_key = tmdb_api_key()
 	if api_key in (None, 'empty_setting', ''): return no_api_key()
 	string = 'tmdb_tv_anime_popular_recent_%s' % page_no

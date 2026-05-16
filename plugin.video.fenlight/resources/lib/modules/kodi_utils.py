@@ -319,8 +319,8 @@ def kodi_refresh():
 	execute_builtin('UpdateLibrary(video,special://skin/foo)')
 
 def refresh_widgets():
-	from fenlight.resources.lib.caches.settings_cache import get_setting
-	from fenlight.resources.lib.caches.random_widgets_cache import RandomWidgets
+	from caches.settings_cache import get_setting
+	from caches.random_widgets_cache import RandomWidgets
 	RandomWidgets().delete_like('random_list.%')
 	kodi_refresh()
 	if get_setting('fenlight.widget_refresh_notification', 'true') == 'true': notification('Widgets Refreshed', 2500)
@@ -395,7 +395,7 @@ def jsonrpc_get_system_setting(setting_id, setting_value=''):
 	return result
 
 def open_settings():
-	from fenlight.resources.lib.windows.base_window import open_window
+	from windows.base_window import open_window
 	open_window(('windows.settings_manager', 'SettingsManager'), 'settings_manager.xml')
 
 def external_scraper_settings():
@@ -407,30 +407,30 @@ def external_scraper_settings():
 
 def progress_dialog(heading='', icon=None):
 	from threading import Thread
-	from fenlight.resources.lib.windows.base_window import create_window
+	from windows.base_window import create_window
 	progress_dialog = create_window(('windows.progress', 'Progress'), 'progress.xml', heading=heading, icon=icon or addon_icon())
 	Thread(target=progress_dialog.run).start()
 	return progress_dialog
 
 def select_dialog(function_list, **kwargs):
-	from fenlight.resources.lib.windows.base_window import open_window
+	from windows.base_window import open_window
 	selection = open_window(('windows.default_dialogs', 'Select'), 'select.xml', **kwargs)
 	if selection in (None, []): return selection
 	if kwargs.get('multi_choice', 'false') == 'true': return [function_list[i] for i in selection]
 	return function_list[selection]
 
 def confirm_dialog(heading='', text='Are you sure?', ok_label='OK', cancel_label='Cancel', default_control=11):
-	from fenlight.resources.lib.windows.base_window import open_window
+	from windows.base_window import open_window
 	kwargs = {'heading': heading, 'text': text, 'ok_label': ok_label, 'cancel_label': cancel_label, 'default_control': default_control}
 	return open_window(('windows.default_dialogs', 'Confirm'), 'confirm.xml', **kwargs)
 
 def ok_dialog(heading='', text='No Results', ok_label='OK'):
-	from fenlight.resources.lib.windows.base_window import open_window
+	from windows.base_window import open_window
 	kwargs = {'heading': heading, 'text': text, 'ok_label': ok_label}
 	return open_window(('windows.default_dialogs', 'OK'), 'ok.xml', **kwargs)
 
 def show_text(heading, text=None, file=None, font_size='small', kodi_log=False):
-	from fenlight.resources.lib.windows.base_window import open_window
+	from windows.base_window import open_window
 	heading = heading.replace('[B]', '').replace('[/B]', '')
 	if file:
 		with open(file, encoding='utf-8') as r: text = r.readlines()
@@ -445,17 +445,17 @@ def notification(line1, time=5000, icon=None):
 	kodi_dialog().notification('Fen Light', line1, icon or addon_icon(), time)
 
 def player_check(mode, params):
-	from fenlight.resources.lib.modules.settings import playback_key
+	from modules.settings import playback_key
 	if mode == 'playback.%s' % playback_key():
-		from fenlight.resources.lib.modules.sources import Sources
+		from modules.sources import Sources
 		Sources().playback_prep(params)
 	elif mode == 'playback.video':
-		from fenlight.resources.lib.modules.player import FenLightPlayer
+		from modules.player import FenLightPlayer
 		FenLightPlayer().run(params.get('url', None), params.get('obj', None))
 	else: ok_dialog('External Playback Detected', 'Playback through external addons is not supported')
 
 def external_playback_check(params):
-	from fenlight.resources.lib.modules.settings import playback_key
+	from modules.settings import playback_key
 	if not playback_key() in params:
 		ok_dialog('External Playback Detected', 'Playback through external addons is not supported')
 		return False
@@ -476,7 +476,7 @@ def volume_checker():
 	# 0% == -60db, 100% == 0db
 	try:
 		if get_property('fenlight.playback.volumecheck_enabled') == 'false' or get_visibility('Player.Muted'): return
-		from fenlight.resources.lib.modules.utils import string_alphanum_to_num
+		from modules.utils import string_alphanum_to_num
 		max_volume = min(int(get_property('fenlight.playback.volumecheck_percent') or '50'), 100)
 		if int(100 - (float(string_alphanum_to_num(get_infolabel('Player.Volume').split('.')[0]))/60)*100) > max_volume: execute_builtin('SetVolume(%d)' % max_volume)
 	except: pass
@@ -489,7 +489,7 @@ def focus_index(index):
 
 def get_all_icons():
 	import requests
-	from fenlight.resources.lib.caches.main_cache import cache_object
+	from caches.main_cache import cache_object
 	def _process(dummy):
 		try:
 			results = requests.get('https://api.github.com/repos/%s/%s/contents/packages/media/icons' % (username, location))
@@ -501,7 +501,7 @@ def get_all_icons():
 
 def get_all_addon_icons():
 	import requests
-	from fenlight.resources.lib.caches.main_cache import cache_object
+	from caches.main_cache import cache_object
 	def _process(dummy):
 		try:
 			results = requests.get('https://api.github.com/repos/%s/%s/contents/packages/addon_icons' % (username, location))
@@ -513,7 +513,7 @@ def get_all_addon_icons():
 def upload_logfile(params):
 	import json
 	import requests
-	from fenlight.resources.lib.modules.utils import copy2clip, make_qrcode
+	from modules.utils import copy2clip, make_qrcode
 	log_files = [('Current Kodi Log', 'kodi.log'), ('Previous Kodi Log', 'kodi.old.log')]
 	list_items = [{'line1': i[0]} for i in log_files]
 	kwargs = {'items': json.dumps(list_items), 'heading': 'Choose Which Log File to Upload', 'narrow_window': 'true'}

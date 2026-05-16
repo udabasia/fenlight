@@ -1,8 +1,8 @@
 import sys
-from fenlight.resources.lib.apis.torbox_api import TorBox
-from fenlight.resources.lib.modules.source_utils import supported_video_extensions
-from fenlight.resources.lib.modules.utils import clean_file_name, normalize
-from fenlight.resources.lib.modules import kodi_utils
+from apis.torbox_api import TorBox
+from modules.source_utils import supported_video_extensions
+from modules.utils import clean_file_name, normalize
+from modules import kodi_utils
 # from modules.kodi_utils import logger
 
 def tb_cloud():
@@ -79,7 +79,7 @@ def resolve_tb(params):
 	if media_type == 'torrent': resolved_link = TorBox.unrestrict_link(file_id)
 	else: resolved_link = TorBox.unrestrict_usenet(file_id)
 	if params.get('play', 'false') != 'true': return resolved_link
-	from fenlight.resources.lib.modules.player import FenLightPlayer
+	from modules.player import FenLightPlayer
 	FenLightPlayer().run(resolved_link, 'video')
 
 def tb_account_info():

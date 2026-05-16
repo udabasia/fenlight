@@ -11,9 +11,9 @@ QR Code and Micro QR Code implementation.
 """
 import sys
 import io
-from fenlight.resources.lib.segno import encoder, utils
-from fenlight.resources.lib.segno.encoder import DataOverflowError
-from fenlight.resources.lib.segno import writers
+from segno import encoder, utils
+from segno.encoder import DataOverflowError
+from segno import writers
 
 __version__ = '1.6.6'
 

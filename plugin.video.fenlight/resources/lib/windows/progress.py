@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from fenlight.resources.lib.windows.base_window import BaseDialog
-from fenlight.resources.lib.modules.kodi_utils import addon_icon
+from windows.base_window import BaseDialog
+from modules.kodi_utils import addon_icon
 # from modules.kodi_utils import logger
 
 class Progress(BaseDialog):

@@ -4,11 +4,11 @@ import time
 import requests
 from threading import Thread
 from urllib.parse import quote
-from fenlight.resources.lib.caches.main_cache import cache_object
-from fenlight.resources.lib.caches.settings_cache import get_setting, set_setting
-from fenlight.resources.lib.modules.utils import copy2clip, make_qrcode, make_tinyurl
-from fenlight.resources.lib.modules.source_utils import supported_video_extensions, seas_ep_filter, extras
-from fenlight.resources.lib.modules.kodi_utils import progress_dialog, notification, hide_busy_dialog, show_busy_dialog, sleep, ok_dialog, progress_dialog, \
+from caches.main_cache import cache_object
+from caches.settings_cache import get_setting, set_setting
+from modules.utils import copy2clip, make_qrcode, make_tinyurl
+from modules.source_utils import supported_video_extensions, seas_ep_filter, extras
+from modules.kodi_utils import progress_dialog, notification, hide_busy_dialog, show_busy_dialog, sleep, ok_dialog, progress_dialog, \
 								notification, hide_busy_dialog
 # from modules.kodi_utils import logger
 
@@ -164,7 +164,7 @@ class AllDebridAPI:
 			return None
 	
 	def display_magnet_pack(self, magnet_url, info_hash):
-		from fenlight.resources.lib.modules.source_utils import supported_video_extensions
+		from modules.source_utils import supported_video_extensions
 		transfer_id = None
 		try:
 			extensions = supported_video_extensions()
@@ -213,8 +213,8 @@ class AllDebridAPI:
 
 	def clear_cache(self, clear_hashes=True):
 		try:
-			from fenlight.resources.lib.caches.debrid_cache import debrid_cache
-			from fenlight.resources.lib.caches.base_cache import connect_database
+			from caches.debrid_cache import debrid_cache
+			from caches.base_cache import connect_database
 			dbcon = connect_database('maincache_db')
 			# USER CLOUD
 			try:

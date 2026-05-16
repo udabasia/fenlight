@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from fenlight.resources.lib.windows.base_window import BaseDialog
-from fenlight.resources.lib.modules.kodi_utils import logger
+from windows.base_window import BaseDialog
+from modules.kodi_utils import logger
 
 class TextViewer(BaseDialog):
 	def __init__(self, *args, **kwargs):

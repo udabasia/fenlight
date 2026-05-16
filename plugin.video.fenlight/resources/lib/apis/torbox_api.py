@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from threading import Thread
 from urllib.parse import urlencode
-from fenlight.resources.lib.caches.settings_cache import get_setting, set_setting
-from fenlight.resources.lib.caches.main_cache import cache_object
-from fenlight.resources.lib.modules.source_utils import supported_video_extensions, seas_ep_filter, extras
-from fenlight.resources.lib.modules.kodi_utils import make_session, kodi_dialog, ok_dialog, notification, confirm_dialog
+from caches.settings_cache import get_setting, set_setting
+from caches.main_cache import cache_object
+from modules.source_utils import supported_video_extensions, seas_ep_filter, extras
+from modules.kodi_utils import make_session, kodi_dialog, ok_dialog, notification, confirm_dialog
 # from modules.kodi_utils import logger
 
 session = make_session('https://api.torbox.app/v1/api/')
@@ -130,7 +130,7 @@ class TorBoxAPI:
 			return None
 
 	def display_magnet_pack(self, magnet_url, info_hash):
-		from fenlight.resources.lib.modules.source_utils import supported_video_extensions
+		from modules.source_utils import supported_video_extensions
 		try:
 			torrent_id = None
 			extensions = supported_video_extensions()
@@ -173,8 +173,8 @@ class TorBoxAPI:
 
 	def clear_cache(self, clear_hashes=True):
 		try:
-			from fenlight.resources.lib.caches.debrid_cache import debrid_cache
-			from fenlight.resources.lib.caches.base_cache import connect_database
+			from caches.debrid_cache import debrid_cache
+			from caches.base_cache import connect_database
 			dbcon = connect_database('maincache_db')
 			# USER CLOUD
 			try:

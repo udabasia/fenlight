@@ -2,7 +2,7 @@
 import time
 from os import path
 import sqlite3 as database
-from fenlight.resources.lib.modules import kodi_utils
+from modules import kodi_utils
 logger = kodi_utils.logger
 
 def table_creators():
@@ -141,11 +141,11 @@ def get_size(file):
 	return s
 
 def clean_databases():
-	from fenlight.resources.lib.caches.external_cache import external_cache
-	from fenlight.resources.lib.caches.main_cache import main_cache
-	from fenlight.resources.lib.caches.lists_cache import lists_cache
-	from fenlight.resources.lib.caches.meta_cache import meta_cache
-	from fenlight.resources.lib.caches.debrid_cache import debrid_cache
+	from caches.external_cache import external_cache
+	from caches.main_cache import main_cache
+	from caches.lists_cache import lists_cache
+	from caches.meta_cache import meta_cache
+	from caches.debrid_cache import debrid_cache
 	clean_cache_list = (('EXTERNAL CACHE', external_cache, database_locations('external_db')),
 						('MAIN CACHE', main_cache, database_locations('maincache_db')), ('LISTS CACHE', lists_cache, database_locations('lists_db')),
 						('TMDB LISTS CACHE', lists_cache, database_locations('tmdb_lists_db')), ('META CACHE', meta_cache, database_locations('metacache_db')),
@@ -170,63 +170,63 @@ def clear_cache(cache_type, silent=False):
 	def _confirm(): return silent or kodi_utils.confirm_dialog()
 	success = True
 	if cache_type == 'meta':
-		from fenlight.resources.lib.caches.meta_cache import delete_meta_cache
+		from caches.meta_cache import delete_meta_cache
 		success = delete_meta_cache(silent=silent)
 	elif cache_type == 'internal_scrapers':
 		if not _confirm(): return
-		from fenlight.resources.lib.apis import easynews_api
+		from apis import easynews_api
 		results = []
 		results.append(easynews_api.clear_media_results_database())
 		for item in ('pm_cloud', 'rd_cloud', 'ad_cloud', 'ed_cloud', 'tb_cloud', 'folders'): results.append(clear_cache(item, silent=True))
 		success = False not in results
 	elif cache_type == 'external_scrapers':
-		from fenlight.resources.lib.caches.external_cache import external_cache
-		from fenlight.resources.lib.caches.debrid_cache import debrid_cache
+		from caches.external_cache import external_cache
+		from caches.debrid_cache import debrid_cache
 		results = []
 		for item in (external_cache, debrid_cache): results.append(item.clear_cache())
 		success = False not in results
 	elif cache_type == 'trakt':
-		from fenlight.resources.lib.caches.trakt_cache import clear_all_trakt_cache_data
+		from caches.trakt_cache import clear_all_trakt_cache_data
 		success = clear_all_trakt_cache_data(silent=silent)
 	elif cache_type == 'imdb':
 		if not _confirm(): return
-		from fenlight.resources.lib.apis.imdb_api import clear_imdb_cache
+		from apis.imdb_api import clear_imdb_cache
 		success = clear_imdb_cache()
 	elif cache_type == 'pm_cloud':
 		if not _confirm(): return
-		from fenlight.resources.lib.apis.premiumize_api import Premiumize
+		from apis.premiumize_api import Premiumize
 		success = Premiumize.clear_cache()
 	elif cache_type == 'rd_cloud':
 		if not _confirm(): return
-		from fenlight.resources.lib.apis.real_debrid_api import RealDebrid
+		from apis.real_debrid_api import RealDebrid
 		success = RealDebrid.clear_cache()
 	elif cache_type == 'ad_cloud':
 		if not _confirm(): return
-		from fenlight.resources.lib.apis.alldebrid_api import AllDebrid
+		from apis.alldebrid_api import AllDebrid
 		success = AllDebrid.clear_cache()
 	elif cache_type == 'tb_cloud':
 		if not _confirm(): return
-		from fenlight.resources.lib.apis.torbox_api import TorBox
+		from apis.torbox_api import TorBox
 		success = TorBox.clear_cache()
 	elif cache_type == 'folders':
 		if not _confirm(): return
-		from fenlight.resources.lib.caches.main_cache import main_cache
+		from caches.main_cache import main_cache
 		success = main_cache.delete_all_folderscrapers()
 	elif cache_type == 'list':
 		if not _confirm(): return
-		from fenlight.resources.lib.caches.lists_cache import lists_cache
+		from caches.lists_cache import lists_cache
 		success = lists_cache.delete_all_lists()
 	elif cache_type == 'ai_functions':
 		if not _confirm(): return
-		from fenlight.resources.lib.caches.lists_cache import lists_cache
+		from caches.lists_cache import lists_cache
 		success = lists_cache.delete_all_ai_lists()
 	elif cache_type == 'tmdb_list':
 		if not _confirm(): return
-		from fenlight.resources.lib.caches.tmdb_lists import tmdb_lists_cache
+		from caches.tmdb_lists import tmdb_lists_cache
 		success = tmdb_lists_cache.clear_all()
 	else:# main
 		if not _confirm(): return
-		from fenlight.resources.lib.caches.main_cache import main_cache
+		from caches.main_cache import main_cache
 		success = main_cache.delete_all()
 	if not silent and success: kodi_utils.notification('Success')
 	return success
@@ -250,11 +250,11 @@ def clear_all_cache():
 	kodi_utils.ok_dialog(text='Success')
 
 def refresh_cached_data(meta):
-	from fenlight.resources.lib.caches.meta_cache import meta_cache
+	from caches.meta_cache import meta_cache
 	media_type, tmdb_id, imdb_id = meta['mediatype'], meta['tmdb_id'], meta['imdb_id']
 	try: meta_cache.delete(media_type, 'tmdb_id', tmdb_id, meta)
 	except: return kodi_utils.notification('Error')
-	from fenlight.resources.lib.apis.imdb_api import refresh_imdb_meta_data
+	from apis.imdb_api import refresh_imdb_meta_data
 	refresh_imdb_meta_data(imdb_id)
 	kodi_utils.notification('Success')
 	kodi_utils.kodi_refresh()

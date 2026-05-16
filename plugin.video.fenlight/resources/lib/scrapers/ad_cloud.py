@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from threading import Thread
-from fenlight.resources.lib.apis.alldebrid_api import AllDebridAPI
-from fenlight.resources.lib.modules import source_utils
-from fenlight.resources.lib.modules.utils import clean_file_name, normalize
-from fenlight.resources.lib.modules.settings import enabled_debrids_check, filter_by_name
+from apis.alldebrid_api import AllDebridAPI
+from modules import source_utils
+from modules.utils import clean_file_name, normalize
+from modules.settings import enabled_debrids_check, filter_by_name
 # from modules.kodi_utils import logger
 
 class source:
@@ -43,7 +43,7 @@ class source:
 					except: pass
 			self.sources = list(_process())
 		except Exception as e:
-			from fenlight.resources.lib.modules.kodi_utils import logger
+			from modules.kodi_utils import logger
 			logger('alldebrid scraper Exception', str(e))
 		source_utils.internal_results(self.scrape_provider, self.sources)
 		return self.sources

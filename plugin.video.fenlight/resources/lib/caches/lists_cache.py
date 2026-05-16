@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from fenlight.resources.lib.caches.base_cache import BaseCache, get_timestamp
-from fenlight.resources.lib.modules.settings import lists_cache_duraton
+from caches.base_cache import BaseCache, get_timestamp
+from modules.settings import lists_cache_duraton
 # from modules.kodi_utils import logger
 
 class ListsCache(BaseCache):

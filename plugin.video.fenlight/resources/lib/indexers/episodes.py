@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 import sys
-from fenlight.resources.lib.modules import kodi_utils, settings
-from fenlight.resources.lib.modules import watched_status as ws
-from fenlight.resources.lib.modules.metadata import tvshow_meta, episodes_meta, all_episodes_meta
-from fenlight.resources.lib.modules.utils import jsondate_to_datetime, adjust_premiered_date, make_day, get_datetime, get_current_timestamp, title_key, date_difference, TaskPool
+from modules import kodi_utils, settings
+from modules import watched_status as ws
+from modules.metadata import tvshow_meta, episodes_meta, all_episodes_meta
+from modules.utils import jsondate_to_datetime, adjust_premiered_date, make_day, get_datetime, get_current_timestamp, title_key, date_difference, TaskPool
 # logger = kodi_utils.logger
 
 def build_episode_list(params):
@@ -325,13 +325,13 @@ def build_single_episode(list_type, params={}):
 		else: resformat, resinsert, list_type = '%Y-%m-%d %H:%M:%S', '2000-01-01 00:00:00', 'episode.next_fenlight'
 		if include_unwatched != 0:
 			if include_unwatched in (1, 3):
-				from fenlight.resources.lib.apis.trakt_api import trakt_watchlist
+				from apis.trakt_api import trakt_watchlist
 				try:
 					watchlist = trakt_watchlist('tvshow', '')
 					unwatched.extend([{'media_ids': i['media_ids'], 'season': 1, 'episode': 0, 'unwatched': True, 'title': i['title']} for i in watchlist])
 				except: pass
 			if include_unwatched in (2, 3):
-				from fenlight.resources.lib.caches.favorites_cache import favorites_cache
+				from caches.favorites_cache import favorites_cache
 				try:
 					favorites = favorites_cache.get_favorites('tvshow')
 					unwatched.extend([{'media_ids': {'tmdb': int(i['tmdb_id'])}, 'season': 1, 'episode': 0, 'unwatched': True, 'title': i['title']} \
@@ -341,7 +341,7 @@ def build_single_episode(list_type, params={}):
 	elif list_type == 'episode.progress': data = ws.get_in_progress_episodes()
 	elif list_type == 'episode.recently_watched': data = ws.get_recently_watched('episode', short_list=True)
 	elif list_type == 'episode.trakt':
-		from fenlight.resources.lib.apis.trakt_api import trakt_get_my_calendar
+		from apis.trakt_api import trakt_get_my_calendar
 		recently_aired = params.get('recently_aired', None)
 		data = trakt_get_my_calendar(recently_aired, get_datetime())
 		hidden_list = ws.get_hidden_progress_items(watched_indicators)

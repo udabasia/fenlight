@@ -3,12 +3,12 @@ import time
 import json
 import random
 from threading import Thread
-from fenlight.resources.lib.caches.external_cache import external_cache
-from fenlight.resources.lib.caches.settings_cache import get_setting
-from fenlight.resources.lib.modules import kodi_utils
-from fenlight.resources.lib.modules import source_utils
-from fenlight.resources.lib.modules.debrid import RD_check, PM_check, AD_check ,TB_check, query_local_cache
-from fenlight.resources.lib.modules.utils import clean_file_name
+from caches.external_cache import external_cache
+from caches.settings_cache import get_setting
+from modules import kodi_utils
+from modules import source_utils
+from modules.debrid import RD_check, PM_check, AD_check ,TB_check, query_local_cache
+from modules.utils import clean_file_name
 # logger = kodi_utils.logger
 
 class source:

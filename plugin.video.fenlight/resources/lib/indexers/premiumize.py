@@ -3,10 +3,10 @@ import re
 import sys
 import math
 from datetime import datetime
-from fenlight.resources.lib.apis.premiumize_api import Premiumize
-from fenlight.resources.lib.modules.source_utils import supported_video_extensions
-from fenlight.resources.lib.modules.utils import clean_file_name, normalize
-from fenlight.resources.lib.modules import kodi_utils
+from apis.premiumize_api import Premiumize
+from modules.source_utils import supported_video_extensions
+from modules.utils import clean_file_name, normalize
+from modules import kodi_utils
 # logger = kodi_utils.logger
 
 def pm_cloud(folder_id=None, folder_name=None):

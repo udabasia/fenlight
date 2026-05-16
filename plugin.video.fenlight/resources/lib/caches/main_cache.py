@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from fenlight.resources.lib.caches.base_cache import BaseCache, get_timestamp
+from caches.base_cache import BaseCache, get_timestamp
 # from modules.kodi_utils import logger
 
 class MainCache(BaseCache):

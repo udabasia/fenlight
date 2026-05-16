@@ -4,11 +4,11 @@ import json
 import requests
 import shutil
 from os import path
-from fenlight.resources.lib.caches.settings_cache import get_setting, set_setting
-from fenlight.resources.lib.modules.crypto_utils import decrypt_json_blob
-from fenlight.resources.lib.modules.utils import string_alphanum_to_num, unzip
-from fenlight.resources.lib.modules import kodi_utils 
-from fenlight.resources.lib.modules.kodi_utils import kodi_dialog
+from caches.settings_cache import get_setting, set_setting
+from modules.crypto_utils import decrypt_json_blob
+from modules.utils import string_alphanum_to_num, unzip
+from modules import kodi_utils 
+from modules.kodi_utils import kodi_dialog
 logger = kodi_utils.logger
 
 def get_location(insert=''):
@@ -44,7 +44,7 @@ def version_check(current_version, online_version):
 
 def refresh_addon_keys():
 	# For update 2.2.01 - 03
-	from fenlight.resources.lib.caches.settings_cache import restore_setting_default
+	from caches.settings_cache import restore_setting_default
 	restore_setting_default({'silent': 'true', 'setting_id': 'tmdb_api'})
 	restore_setting_default({'silent': 'true', 'setting_id': 'trakt.client'})
 	restore_setting_default({'silent': 'true', 'setting_id': 'trakt.secret'})

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from fenlight.resources.lib.caches.favorites_cache import favorites_cache
-from fenlight.resources.lib.modules.settings import ignore_articles
-from fenlight.resources.lib.modules.utils import sort_for_article
+from caches.favorites_cache import favorites_cache
+from modules.settings import ignore_articles
+from modules.utils import sort_for_article
 # from modules.kodi_utils import logger
 
 def get_favorites(media_type, dummy_arg):

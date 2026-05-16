@@ -3,12 +3,12 @@ import sys
 import json
 import random
 from datetime import date
-from fenlight.resources.lib.modules.sources import Sources
-from fenlight.resources.lib.modules.settings import date_offset, watched_indicators, ignore_articles, playback_key, max_threads
-from fenlight.resources.lib.modules.metadata import episodes_meta, all_episodes_meta
-from fenlight.resources.lib.modules.watched_status import get_watched_status_episode, get_next_episodes, get_hidden_progress_items, watched_info_episode, get_next
-from fenlight.resources.lib.modules.utils import adjust_premiered_date, get_datetime, title_key, TaskPool
-from fenlight.resources.lib.modules import kodi_utils
+from modules.sources import Sources
+from modules.settings import date_offset, watched_indicators, ignore_articles, playback_key, max_threads
+from modules.metadata import episodes_meta, all_episodes_meta
+from modules.watched_status import get_watched_status_episode, get_next_episodes, get_hidden_progress_items, watched_info_episode, get_next
+from modules.utils import adjust_premiered_date, get_datetime, title_key, TaskPool
+from modules import kodi_utils
 # logger = kodi_utils.logger
 
 class EpisodeTools:

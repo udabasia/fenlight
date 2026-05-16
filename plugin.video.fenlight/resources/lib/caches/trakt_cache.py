@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from threading import Thread
-from fenlight.resources.lib.caches.base_cache import connect_database
-from fenlight.resources.lib.modules.kodi_utils import sleep, confirm_dialog, close_all_dialog
+from caches.base_cache import connect_database
+from modules.kodi_utils import sleep, confirm_dialog, close_all_dialog
 # from modules.kodi_utils import logger
 
 class TraktCache:	
@@ -176,7 +176,7 @@ def clear_all_trakt_cache_data(silent=False, refresh=True):
 	try:
 		start = silent or confirm_dialog()
 		if not start: return False
-		from fenlight.resources.lib.caches.main_cache import main_cache
+		from caches.main_cache import main_cache
 		main_cache_dbcon = connect_database('maincache_db')
 		lists_with_media = main_cache_dbcon.execute('SELECT id FROM maincache WHERE id LIKE %s' % "'trakt_lists_with_media_%'").fetchall()
 		for item in lists_with_media:
@@ -188,7 +188,7 @@ def clear_all_trakt_cache_data(silent=False, refresh=True):
 		dbcon.execute('DELETE FROM trakt_data WHERE id NOT LIKE %s' % "'trakt_list_custom_sort_%'")
 		dbcon.execute('VACUUM')
 		if refresh:
-			from fenlight.resources.lib.apis.trakt_api import trakt_sync_activities
+			from apis.trakt_api import trakt_sync_activities
 			Thread(target=trakt_sync_activities).start()
 		return True
 	except: return False

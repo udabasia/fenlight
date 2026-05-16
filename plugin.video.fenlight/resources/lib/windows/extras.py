@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
 from threading import Thread
 from datetime import datetime, timedelta
-from fenlight.resources.lib.apis import ai_api, imdb_api, omdb_api, tmdb_api
-from fenlight.resources.lib.indexers import dialogs
-from fenlight.resources.lib.modules import kodi_utils, settings
-from fenlight.resources.lib.windows.base_window import BaseDialog, window_manager, window_player
-from fenlight.resources.lib.apis import trakt_api
-from fenlight.resources.lib.indexers import people
-from fenlight.resources.lib.indexers.images import Images
-from fenlight.resources.lib.modules import watched_status
-from fenlight.resources.lib.modules.sources import Sources
-from fenlight.resources.lib.modules.utils import change_image_resolution, adjust_premiered_date, get_datetime, make_thread_list_enumerate, batch_replace, get_current_timestamp
-from fenlight.resources.lib.modules.meta_lists import networks, movie_genres, tvshow_genres
-from fenlight.resources.lib.modules.metadata import movieset_meta, episodes_meta, movie_meta, tvshow_meta
-from fenlight.resources.lib.modules.episode_tools import EpisodeTools
+from apis import ai_api, imdb_api, omdb_api, tmdb_api
+from indexers import dialogs
+from modules import kodi_utils, settings
+from windows.base_window import BaseDialog, window_manager, window_player
+from apis import trakt_api
+from indexers import people
+from indexers.images import Images
+from modules import watched_status
+from modules.sources import Sources
+from modules.utils import change_image_resolution, adjust_premiered_date, get_datetime, make_thread_list_enumerate, batch_replace, get_current_timestamp
+from modules.meta_lists import networks, movie_genres, tvshow_genres
+from modules.metadata import movieset_meta, episodes_meta, movie_meta, tvshow_meta
+from modules.episode_tools import EpisodeTools
 # logger = kodi_utils.logger
 
 class Extras(BaseDialog):
@@ -69,7 +69,7 @@ class Extras(BaseDialog):
 			focus_id = self.getFocusId()
 			if not focus_id in self.items_list_ids: return
 			kodi_utils.show_busy_dialog()
-			from fenlight.resources.lib.modules.metadata import movie_meta, tvshow_meta
+			from modules.metadata import movie_meta, tvshow_meta
 			chosen_listitem = self.get_listitem(focus_id)
 			function = movie_meta if self.media_type == 'movie' else tvshow_meta
 			meta = function('tmdb_id', chosen_listitem.getProperty('tmdb_id'), self.tmdb_api_key, self.mpaa_region, self.current_date)

@@ -6,11 +6,11 @@ import json
 from threading import Thread
 from urllib.request import Request, urlopen
 from urllib.parse import parse_qsl, urlparse, unquote
-from fenlight.resources.lib.modules import kodi_utils
-from fenlight.resources.lib.modules.sources import Sources
-from fenlight.resources.lib.modules.settings import download_directory
-from fenlight.resources.lib.modules.source_utils import clean_title
-from fenlight.resources.lib.modules.utils import clean_file_name, safe_string, remove_accents, normalize
+from modules import kodi_utils
+from modules.sources import Sources
+from modules.settings import download_directory
+from modules.source_utils import clean_title
+from modules.utils import clean_file_name, safe_string, remove_accents, normalize
 # logger = kodi_utils.logger
 
 def runner(params):
@@ -22,7 +22,7 @@ def runner(params):
 			image_params['media_type'] = item
 			Downloader(image_params).run()
 	elif action == 'meta.pack':
-		from fenlight.resources.lib.modules.source_utils import find_season_in_release_title
+		from modules.source_utils import find_season_in_release_title
 		provider = params['provider']
 		try:
 			debrid_files, debrid_function = Sources().debridPacks(provider, params['name'], params['magnet_url'], params['info_hash'], download=True)
@@ -164,18 +164,18 @@ class Downloader:
 					if source.get('scrape_provider', '') == 'easynews': source['url_dl'] = source['down_url']
 					url = Sources().resolve_sources(source, meta=self.meta)
 					if 'torbox' in url:
-						from fenlight.resources.lib.apis.torbox_api import TorBoxAPI
+						from apis.torbox_api import TorBoxAPI
 						url = TorBoxAPI().add_headers_to_url(url)
 				except: pass
 			elif self.action == 'meta.pack':
 				if self.provider == 'Real-Debrid':
-					from fenlight.resources.lib.apis.real_debrid_api import RealDebridAPI as debrid_function
+					from apis.real_debrid_api import RealDebridAPI as debrid_function
 				elif self.provider == 'Premiumize.me':
-					from fenlight.resources.lib.apis.premiumize_api import PremiumizeAPI as debrid_function
+					from apis.premiumize_api import PremiumizeAPI as debrid_function
 				elif self.provider == 'AllDebrid':
-					from fenlight.resources.lib.apis.alldebrid_api import AllDebridAPI as debrid_function
+					from apis.alldebrid_api import AllDebridAPI as debrid_function
 				elif self.provider == 'TorBox':
-					from fenlight.resources.lib.apis.torbox_api import TorBoxAPI as debrid_function
+					from apis.torbox_api import TorBoxAPI as debrid_function
 				url = self.params_get('pack_files')['link']
 				if self.provider in ('Real-Debrid', 'AllDebrid'):
 					url = debrid_function().unrestrict_link(url)
@@ -189,21 +189,21 @@ class Downloader:
 				if '_direct' in self.action:
 					url = self.params_get('url')
 				elif 'realdebrid' in self.action:
-					from fenlight.resources.lib.indexers.real_debrid import resolve_rd
+					from indexers.real_debrid import resolve_rd
 					url = resolve_rd(self.params)
 				elif 'alldebrid' in self.action:
-					from fenlight.resources.lib.indexers.alldebrid import resolve_ad
+					from indexers.alldebrid import resolve_ad
 					url = resolve_ad(self.params)
 				elif 'premiumize' in self.action:
-					from fenlight.resources.lib.apis.premiumize_api import PremiumizeAPI
+					from apis.premiumize_api import PremiumizeAPI
 					url = PremiumizeAPI().add_headers_to_url(url)
 				elif 'torbox' in self.action:
-					from fenlight.resources.lib.apis.torbox_api import TorBoxAPI
-					from fenlight.resources.lib.indexers.torbox import resolve_tb
+					from apis.torbox_api import TorBoxAPI
+					from indexers.torbox import resolve_tb
 					url = resolve_tb(self.params)
 					url = TorBoxAPI().add_headers_to_url(url)
 				elif 'easynews' in self.action:
-					from fenlight.resources.lib.indexers.easynews import resolve_easynews
+					from indexers.easynews import resolve_easynews
 					url = resolve_easynews(self.params)
 		try: headers = dict(parse_qsl(url.rsplit('|', 1)[1]))
 		except: headers = dict('')
@@ -403,6 +403,6 @@ def viewer(params):
 	kodi_utils.set_view_mode('view.main', '')
 
 def manager(foo=None):
-	from fenlight.resources.lib.windows.base_window import open_window
+	from windows.base_window import open_window
 	kwargs = {}
 	return open_window(('windows.downloads_manager', 'DownloadsManager'), 'downloads_manager.xml', **kwargs)

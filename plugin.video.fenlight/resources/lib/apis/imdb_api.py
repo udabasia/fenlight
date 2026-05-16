@@ -3,12 +3,12 @@ import re
 import json
 import requests
 from html import unescape
-from fenlight.resources.lib.caches.base_cache import connect_database
-from fenlight.resources.lib.caches.main_cache import cache_object
-from fenlight.resources.lib.caches.settings_cache import get_setting
-from fenlight.resources.lib.modules.dom_parser import parseDOM
-from fenlight.resources.lib.modules.kodi_utils import sleep
-from fenlight.resources.lib.modules.utils import remove_accents, replace_html_codes, normalize
+from caches.base_cache import connect_database
+from caches.main_cache import cache_object
+from caches.settings_cache import get_setting
+from modules.dom_parser import parseDOM
+from modules.kodi_utils import sleep
+from modules.utils import remove_accents, replace_html_codes, normalize
 # from modules.kodi_utils import logger
 
 GQL_URL  = 'https://graphql.imdb.com/'

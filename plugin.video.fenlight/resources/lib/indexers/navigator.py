@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 import sys
-from fenlight.resources.lib.caches.navigator_cache import navigator_cache as nc
-from fenlight.resources.lib.caches.settings_cache import get_setting, set_setting
-from fenlight.resources.lib.modules import kodi_utils as k
-from fenlight.resources.lib.modules import settings as s
+from caches.navigator_cache import navigator_cache as nc
+from caches.settings_cache import get_setting, set_setting
+from modules import kodi_utils as k
+from modules import settings as s
 # logger = k.logger
 
 class Navigator:
@@ -291,8 +291,8 @@ class Navigator:
 
 	def certifications(self):
 		menu_type = self.params_get('menu_type')
-		if menu_type == 'movie': from fenlight.resources.lib.modules.meta_lists import movie_certifications as function
-		else: from fenlight.resources.lib.modules.meta_lists import tvshow_certifications as function
+		if menu_type == 'movie': from modules.meta_lists import movie_certifications as function
+		else: from modules.meta_lists import tvshow_certifications as function
 		menu_type = self.params_get('menu_type')
 		if menu_type == 'movie': mode, action = 'build_movie_list', 'tmdb_movies_certifications'
 		else:
@@ -303,7 +303,7 @@ class Navigator:
 		self.end_directory()
 
 	def languages(self):
-		from fenlight.resources.lib.modules.meta_lists import languages as function
+		from modules.meta_lists import languages as function
 		menu_type = self.params_get('menu_type')
 		if menu_type == 'movie': mode, action = 'build_movie_list', 'tmdb_movies_languages'
 		else: mode, action = 'build_tvshow_list', 'tmdb_tv_languages'
@@ -313,15 +313,15 @@ class Navigator:
 	def years(self):
 		menu_type = self.params_get('menu_type')
 		if menu_type == 'movie':
-			from fenlight.resources.lib.modules.meta_lists import years_movies as function
+			from modules.meta_lists import years_movies as function
 			mode, action = 'build_movie_list', 'tmdb_movies_year'
 		else:
 			mode = 'build_tvshow_list'
 			if menu_type == 'tvshow':
-				from fenlight.resources.lib.modules.meta_lists import years_tvshows as function
+				from modules.meta_lists import years_tvshows as function
 				action = 'tmdb_tv_year'
 			else:
-				from fenlight.resources.lib.modules.meta_lists import years_anime as function
+				from modules.meta_lists import years_anime as function
 				action = 'tmdb_anime_year'
 		for i in function(): self.add({'mode': mode, 'action': action, 'key_id': i['id'], 'name': i['name']}, i['name'], 'calender')
 		self.end_directory()
@@ -329,15 +329,15 @@ class Navigator:
 	def decades(self):
 		menu_type = self.params_get('menu_type')
 		if menu_type == 'movie':
-			from fenlight.resources.lib.modules.meta_lists import decades_movies as function
+			from modules.meta_lists import decades_movies as function
 			mode, action = 'build_movie_list', 'tmdb_movies_decade'
 		else:
 			mode = 'build_tvshow_list'
 			if menu_type == 'tvshow':
-				from fenlight.resources.lib.modules.meta_lists import decades_tvshows as function
+				from modules.meta_lists import decades_tvshows as function
 				action = 'tmdb_tv_decade'
 			else:
-				from fenlight.resources.lib.modules.meta_lists import decades_anime as function
+				from modules.meta_lists import decades_anime as function
 				action = 'tmdb_anime_decade'
 		for i in function(): self.add({'mode': mode, 'action': action, 'key_id': i['id'], 'name': i['name']}, i['name'], 'calendar_decades')
 		self.end_directory()
@@ -345,7 +345,7 @@ class Navigator:
 	def networks(self):
 		menu_type = self.params_get('menu_type')
 		if menu_type == 'movie': return
-		from fenlight.resources.lib.modules.meta_lists import networks
+		from modules.meta_lists import networks
 		for i in sorted(networks(), key=lambda k: k['name']): self.add({'mode': 'build_tvshow_list', 'action': 'tmdb_tv_networks', 'key_id': i['id'], 'name': i['name']}, i['name'],
 																		self.get_icon(i['logo'], 'network_icons'), original_image=True)
 		self.end_directory()
@@ -354,10 +354,10 @@ class Navigator:
 		menu_type = self.params_get('menu_type')
 		tmdb_img = 'https://image.tmdb.org/t/p/original/%s'
 		if menu_type == 'movie':
-			from fenlight.resources.lib.modules.meta_lists import watch_providers_movies as function
+			from modules.meta_lists import watch_providers_movies as function
 			mode, action = 'build_movie_list', 'tmdb_movies_providers'
 		else:
-			from fenlight.resources.lib.modules.meta_lists import watch_providers_tvshows as function
+			from modules.meta_lists import watch_providers_tvshows as function
 			mode = 'build_tvshow_list'
 			if menu_type == 'tvshow': action = 'tmdb_tv_providers'
 			else: action = 'tmdb_anime_providers'
@@ -367,22 +367,22 @@ class Navigator:
 	def genres(self):
 		menu_type = self.params_get('menu_type')
 		if menu_type == 'movie':
-			from fenlight.resources.lib.modules.meta_lists import movie_genres as function
+			from modules.meta_lists import movie_genres as function
 			mode, action = 'build_movie_list', 'tmdb_movies_genres'
 		else:
 			mode = 'build_tvshow_list'
 			if menu_type == 'tvshow':
-				from fenlight.resources.lib.modules.meta_lists import tvshow_genres as function
+				from modules.meta_lists import tvshow_genres as function
 				action = 'tmdb_tv_genres'
 			else:
-				from fenlight.resources.lib.modules.meta_lists import anime_genres as function
+				from modules.meta_lists import anime_genres as function
 				action = 'tmdb_anime_genres'
 		for i in function(): self.add({'mode': mode, 'action': action, 'key_id': i['id'], 'name': i['name']}, i['name'], i['icon'])
 		self.end_directory()
 
 	def search_history(self):
 		from urllib.parse import unquote
-		from fenlight.resources.lib.caches.main_cache import main_cache
+		from caches.main_cache import main_cache
 		search_mode_dict = {
 		'movie': ('movie_queries', {'mode': 'search.get_key_id', 'media_type': 'movie', 'isFolder': 'false'}),
 		'tvshow': ('tvshow_queries', {'mode': 'search.get_key_id', 'media_type': 'tv_show', 'isFolder': 'false'}),
@@ -411,7 +411,7 @@ class Navigator:
 		self.end_directory()
 
 	def keyword_results(self):
-		from fenlight.resources.lib.apis.tmdb_api import tmdb_keywords_by_query
+		from apis.tmdb_api import tmdb_keywords_by_query
 		media_type, key_id = self.params_get('media_type'), self.params_get('key_id') or self.params_get('query')
 		try: page_no = int(self.params_get('new_page', '1'))
 		except: page_no = self.params_get('new_page')
@@ -462,7 +462,7 @@ class Navigator:
 		contents = nc.get_shortcut_folder_contents(list_name)
 		folder_icon = self.get_icon('folder')
 		if is_random:
-			from fenlight.resources.lib.indexers.random_lists import random_shortcut_folders
+			from indexers.random_lists import random_shortcut_folders
 			return random_shortcut_folders(list_name.replace(' [COLOR red][RANDOM][/COLOR]', ''), contents)
 		if contents:
 			for count, item in enumerate(contents):
@@ -485,7 +485,7 @@ class Navigator:
 		self.end_directory()
 
 	def discover_contents(self):
-		from fenlight.resources.lib.caches.discover_cache import discover_cache
+		from caches.discover_cache import discover_cache
 		action, media_type = self.params_get('action', ''), self.params_get('media_type')
 		if not action:
 			if self.params_get('show_new', 'true') == 'true':
@@ -531,8 +531,8 @@ class Navigator:
 		self.end_directory()
 
 	def because_you_watched(self):
-		from fenlight.resources.lib.modules.watched_status import get_recently_watched
-		from fenlight.resources.lib.modules.episode_tools import single_last_watched_episodes
+		from modules.watched_status import get_recently_watched
+		from modules.episode_tools import single_last_watched_episodes
 		recommend_type = s.recommend_service()
 		menu_type = self.params_get('menu_type')
 		action_dict = {'movie':

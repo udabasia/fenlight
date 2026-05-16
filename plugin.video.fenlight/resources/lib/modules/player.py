@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-from fenlight.resources.lib.modules import kodi_utils as ku, settings as st
+from modules import kodi_utils as ku, settings as st
 import xbmc
 import json
 from threading import Thread
-from fenlight.resources.lib.apis.trakt_api import make_trakt_slug
-from fenlight.resources.lib.caches.settings_cache import get_setting
-from fenlight.resources.lib.modules import watched_status as ws
+from apis.trakt_api import make_trakt_slug
+from caches.settings_cache import get_setting
+from modules import watched_status as ws
 # logger = ku.logger
 
 class FenLightPlayer(xbmc.Player):
@@ -176,12 +176,12 @@ class FenLightPlayer(xbmc.Player):
 		except: pass
 
 	def run_next_ep(self):
-		from fenlight.resources.lib.modules.episode_tools import EpisodeTools
+		from modules.episode_tools import EpisodeTools
 		if not self.media_marked: self.media_watched_marker(force_watched=True)
 		EpisodeTools(self.meta, self.nextep_settings).auto_nextep()
 
 	def run_random_continual(self):
-		from fenlight.resources.lib.modules.episode_tools import EpisodeTools
+		from modules.episode_tools import EpisodeTools
 		if not self.media_marked: self.media_watched_marker(force_watched=True)
 		EpisodeTools(self.meta).play_random_continual(False)
 
@@ -195,7 +195,7 @@ class FenLightPlayer(xbmc.Player):
 				self.meta['stinger_keys'] = stinger_keys
 			except: pass
 		if stinger_keys:
-			from fenlight.resources.lib.windows.base_window import open_window
+			from windows.base_window import open_window
 			Thread(target=lambda: open_window(('windows.playback_notifications', 'StingersNotification'), 'playback_notifications.xml', meta=self.meta)).start()
 
 	def set_resume_point(self, listitem):

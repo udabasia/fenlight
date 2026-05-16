@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 from threading import Thread
-from fenlight.resources.lib.apis.trakt_api import trakt_watched_status_mark, trakt_official_status, trakt_progress, trakt_get_hidden_items
-from fenlight.resources.lib.caches.base_cache import connect_database, database
-from fenlight.resources.lib.caches.trakt_cache import clear_trakt_collection_watchlist_data
-from fenlight.resources.lib.modules.kodi_utils import kodi_progress_background, sleep, get_video_database_path, notification, kodi_refresh
-from fenlight.resources.lib.modules import metadata
-from fenlight.resources.lib.modules.utils import get_datetime, adjust_premiered_date, sort_for_article, TaskPool
-from fenlight.resources.lib.modules import settings
+from apis.trakt_api import trakt_watched_status_mark, trakt_official_status, trakt_progress, trakt_get_hidden_items
+from caches.base_cache import connect_database, database
+from caches.trakt_cache import clear_trakt_collection_watchlist_data
+from modules.kodi_utils import kodi_progress_background, sleep, get_video_database_path, notification, kodi_refresh
+from modules import metadata
+from modules.utils import get_datetime, adjust_premiered_date, sort_for_article, TaskPool
+from modules import settings
 # from modules.kodi_utils import logger
 
 def get_database(watched_indicators=None):
@@ -49,7 +49,7 @@ def update_hidden_progress(media_id):
 	new_hidden = [i for i in current_hidden if i != int(media_id)]
 	if new_hidden == current_hidden: return
 	if watched_indicators == 0: function = hide_unhide_progress_items
-	else: from fenlight.resources.lib.apis.trakt_api import hide_unhide_progress_items as function
+	else: from apis.trakt_api import hide_unhide_progress_items as function
 	function({'action': 'undrop', 'media_type': 'shows', 'media_id': media_id, 'section': 'dropped', 'refresh': 'false'})
 
 def hide_unhide_progress_items(params):

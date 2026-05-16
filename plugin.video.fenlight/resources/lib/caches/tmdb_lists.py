@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from fenlight.resources.lib.caches.base_cache import BaseCache, get_timestamp
-from fenlight.resources.lib.modules.kodi_utils import logger
+from caches.base_cache import BaseCache, get_timestamp
+from modules.kodi_utils import logger
 
 class TMDbListsCache(BaseCache):
 	def __init__(self):

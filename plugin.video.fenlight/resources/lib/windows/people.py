@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 from threading import Thread
-from fenlight.resources.lib.windows.base_window import BaseDialog, window_manager, window_player
-from fenlight.resources.lib.apis.tmdb_api import tmdb_people_info, tmdb_people_full_info
-from fenlight.resources.lib.apis.imdb_api import imdb_people_trivia
-from fenlight.resources.lib.indexers import dialogs
-from fenlight.resources.lib.indexers.images import Images
-from fenlight.resources.lib.modules.kodi_utils import addon_fanart, execute_builtin, notification, show_busy_dialog, hide_busy_dialog, get_icon
-from fenlight.resources.lib.modules.settings import extras_enable_scrollbars, tmdb_api_key, easynews_authorized, mpaa_region, rpdb_info
-from fenlight.resources.lib.modules.utils import calculate_age, get_datetime, remove_accents
+from windows.base_window import BaseDialog, window_manager, window_player
+from apis.tmdb_api import tmdb_people_info, tmdb_people_full_info
+from apis.imdb_api import imdb_people_trivia
+from indexers import dialogs
+from indexers.images import Images
+from modules.kodi_utils import addon_fanart, execute_builtin, notification, show_busy_dialog, hide_busy_dialog, get_icon
+from modules.settings import extras_enable_scrollbars, tmdb_api_key, easynews_authorized, mpaa_region, rpdb_info
+from modules.utils import calculate_age, get_datetime, remove_accents
 # from modules.kodi_utils import logger
 
 
@@ -71,7 +71,7 @@ class People(BaseDialog):
 			focus_id = self.getFocusId()
 			if not focus_id in (People.more_from_movies_id, People.more_from_tvshows_id, People.more_from_director_id): return
 			show_busy_dialog()
-			from fenlight.resources.lib.modules.metadata import movie_meta, tvshow_meta
+			from modules.metadata import movie_meta, tvshow_meta
 			chosen_listitem = self.get_listitem(focus_id)
 			media_type = 'movie' if focus_id in (People.more_from_movies_id, People.more_from_director_id) else 'tvshow'
 			function = movie_meta if media_type == 'movie' else tvshow_meta

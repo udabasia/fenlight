@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 import json
-from fenlight.resources.lib.windows.base_window import BaseDialog
-from fenlight.resources.lib.indexers.people import person_data_dialog
-from fenlight.resources.lib.indexers.dialogs import favorites_manager_choice
-from fenlight.resources.lib.modules.settings import download_directory
-from fenlight.resources.lib.modules.kodi_utils import addon_fanart, get_icon, select_dialog
+from windows.base_window import BaseDialog
+from indexers.people import person_data_dialog
+from indexers.dialogs import favorites_manager_choice
+from modules.settings import download_directory
+from modules.kodi_utils import addon_fanart, get_icon, select_dialog
 # from modules.kodi_utils import logger
 
 

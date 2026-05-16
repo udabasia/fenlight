@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-from fenlight.resources.lib.apis.easynews_api import EasyNews
-from fenlight.resources.lib.modules import source_utils
-from fenlight.resources.lib.modules.utils import clean_file_name, normalize
-from fenlight.resources.lib.modules.settings import filter_by_name, easynews_language_filter
+from apis.easynews_api import EasyNews
+from modules import source_utils
+from modules.utils import clean_file_name, normalize
+from modules.settings import filter_by_name, easynews_language_filter
 # from modules.kodi_utils import logger
 
 class source:
@@ -37,11 +37,11 @@ class source:
 									'scrape_provider': self.scrape_provider}
 						yield source_item
 					except Exception as e:
-						from fenlight.resources.lib.modules.kodi_utils import logger
+						from modules.kodi_utils import logger
 						logger('easynews scraper yield source error', str(e))
 			self.sources = list(_process())
 		except Exception as e:
-			from fenlight.resources.lib.modules.kodi_utils import logger
+			from modules.kodi_utils import logger
 			logger('easynews scraper Exception', str(e))
 		source_utils.internal_results(self.scrape_provider, self.sources)
 		return self.sources

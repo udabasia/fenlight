@@ -3,14 +3,14 @@ import json
 import time
 import requests
 from urllib.parse import unquote, quote_plus
-from fenlight.resources.lib.caches import trakt_cache
-from fenlight.resources.lib.caches.settings_cache import get_setting, set_setting
-from fenlight.resources.lib.caches.main_cache import cache_object
-from fenlight.resources.lib.caches.lists_cache import lists_cache_object
-from fenlight.resources.lib.modules import kodi_utils
-from fenlight.resources.lib.modules import settings
-from fenlight.resources.lib.modules.metadata import movie_meta_external_id, tvshow_meta_external_id
-from fenlight.resources.lib.modules.utils import sort_list, sort_for_article, get_datetime, timedelta, replace_html_codes, copy2clip, make_qrcode, make_tinyurl, \
+from caches import trakt_cache
+from caches.settings_cache import get_setting, set_setting
+from caches.main_cache import cache_object
+from caches.lists_cache import lists_cache_object
+from modules import kodi_utils
+from modules import settings
+from modules.metadata import movie_meta_external_id, tvshow_meta_external_id
+from modules.utils import sort_list, sort_for_article, get_datetime, timedelta, replace_html_codes, copy2clip, make_qrcode, make_tinyurl, \
 							TaskPool, jsondate_to_datetime as js2date
 # logger = kodi_utils.logger
 

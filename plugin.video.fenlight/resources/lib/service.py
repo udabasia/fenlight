@@ -5,8 +5,8 @@ import json
 import inspect
 from time import time
 from threading import Thread
-from fenlight.resources.lib.caches.settings_cache import get_setting, set_setting, sync_settings
-from fenlight.resources.lib.modules import kodi_utils
+from caches.settings_cache import get_setting, set_setting, sync_settings
+from modules import kodi_utils
 
 pause_services_prop = 'fenlight.pause_services'
 firstrun_update_prop = 'fenlight.firstrun_update'
@@ -35,7 +35,7 @@ class SetAddonConstants:
 class DatabaseMaintenance:
 	def run(self):
 		kodi_utils.logger('Fen Light', 'DatabaseMaintenance Service Starting')
-		from fenlight.resources.lib.caches.base_cache import check_databases_integrity
+		from caches.base_cache import check_databases_integrity
 		check_databases_integrity(silent=True)
 		return kodi_utils.logger('Fen Light', 'DatabaseMaintenance Service Finished')
 
@@ -58,9 +58,9 @@ class OnUpdateChanges:
 
 	def refresh_addon_keys(self):
 		# For update 2.2.01 - 03
-		from fenlight.resources.lib.caches.trakt_cache import clear_all_trakt_cache_data
-		from fenlight.resources.lib.caches.tmdb_lists import tmdb_lists_cache
-		from fenlight.resources.lib.caches.settings_cache import restore_setting_default
+		from caches.trakt_cache import clear_all_trakt_cache_data
+		from caches.tmdb_lists import tmdb_lists_cache
+		from caches.settings_cache import restore_setting_default
 		show_dialog = False
 		if get_setting('fenlight.tmdb_api') == 'b14c2656f72e5bab233def36928a202b':
 			restore_setting_default({'silent': 'true', 'setting_id': 'tmdb_api'})
@@ -87,7 +87,7 @@ class OnUpdateChanges:
 class CustomWindowsPrepare:
 	def run(self):
 		kodi_utils.logger('Fen Light', 'CustomWindowsPrepare Service Starting')
-		from fenlight.resources.lib.windows.base_window import FontUtils, ExtrasUtils
+		from windows.base_window import FontUtils, ExtrasUtils
 		monitor, player = kodi_utils.kodi_monitor(), kodi_utils.kodi_player()
 		wait_for_abort, is_playing = monitor.waitForAbort, player.isPlayingVideo
 		kodi_utils.clear_property(current_skin_prop)
@@ -105,8 +105,8 @@ class CustomWindowsPrepare:
 class TraktMonitor:
 	def run(self):
 		kodi_utils.logger('Fen Light', 'TraktMonitor Service Starting')
-		from fenlight.resources.lib.apis.trakt_api import trakt_sync_activities
-		from fenlight.resources.lib.modules.settings import trakt_user_active, trakt_sync_interval
+		from apis.trakt_api import trakt_sync_activities
+		from modules.settings import trakt_user_active, trakt_sync_interval
 		monitor, player = kodi_utils.kodi_monitor(), kodi_utils.kodi_player()
 		wait_for_abort, is_playing = monitor.waitForAbort, player.isPlayingVideo
 		while not monitor.abortRequested():
@@ -138,8 +138,8 @@ class UpdateCheck:
 	def run(self):
 		if kodi_utils.get_property(firstrun_update_prop) == 'true': return
 		kodi_utils.logger('Fen Light', 'UpdateCheck Service Starting')
-		from fenlight.resources.lib.modules.updater import update_check
-		from fenlight.resources.lib.modules.settings import update_action, update_delay
+		from modules.updater import update_check
+		from modules.settings import update_action, update_delay
 		end_pause = time() + update_delay()
 		monitor, player = kodi_utils.kodi_monitor(), kodi_utils.kodi_player()
 		wait_for_abort, is_playing = monitor.waitForAbort, player.isPlayingVideo
@@ -204,7 +204,7 @@ class WidgetRefresher:
 class AutoStart:
 	def run(self):
 		kodi_utils.logger('Fen Light', 'AutoStart Service Starting')
-		from fenlight.resources.lib.modules.settings import auto_start_fenlight
+		from modules.settings import auto_start_fenlight
 		if auto_start_fenlight(): kodi_utils.run_addon()
 		return kodi_utils.logger('Fen Light', 'AutoStart Service Finished')
 
@@ -241,7 +241,7 @@ class AddonXMLCheck:
 		kodi_utils.disable_enable_addon()
 
 	def reassign_addon_icon(self):
-		from fenlight.resources.lib.indexers.dialogs import addon_icon_choice
+		from indexers.dialogs import addon_icon_choice
 		addon_icon_choice({'set_icon': get_setting('addon_icon_choice_name', 'fenlight_icon_01.png')})
 
 class FenLightMonitor(Monitor):

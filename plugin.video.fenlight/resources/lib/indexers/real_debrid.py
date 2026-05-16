@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 import sys
 from datetime import datetime
-from fenlight.resources.lib.modules.utils import datetime_workaround
-from fenlight.resources.lib.apis.real_debrid_api import RealDebrid
-from fenlight.resources.lib.modules import kodi_utils
-from fenlight.resources.lib.modules.source_utils import supported_video_extensions
-from fenlight.resources.lib.modules.utils import clean_file_name, normalize, jsondate_to_datetime
+from modules.utils import datetime_workaround
+from apis.real_debrid_api import RealDebrid
+from modules import kodi_utils
+from modules.source_utils import supported_video_extensions
+from modules.utils import clean_file_name, normalize, jsondate_to_datetime
 logger = kodi_utils.logger
 
 def rd_cloud():
@@ -123,7 +123,7 @@ def resolve_rd(params):
 	url = params['url']
 	resolved_link = RealDebrid.unrestrict_link(url)
 	if params.get('play', 'false') != 'true' : return resolved_link
-	from fenlight.resources.lib.modules.player import FenLightPlayer
+	from modules.player import FenLightPlayer
 	FenLightPlayer().run(resolved_link, 'video')
 
 def rd_account_info():

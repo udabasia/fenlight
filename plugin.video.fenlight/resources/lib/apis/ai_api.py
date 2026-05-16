@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 import requests
-from fenlight.resources.lib.apis import groq_api
-from fenlight.resources.lib.apis.tmdb_api import tmdb_movies_search, tmdb_tv_search
-from fenlight.resources.lib.caches.base_cache import get_timestamp
-from fenlight.resources.lib.caches.lists_cache import lists_cache, lists_cache_object
-from fenlight.resources.lib.apis import google_api
-from fenlight.resources.lib.modules.metadata import movie_meta, tvshow_meta
-from fenlight.resources.lib.modules.kodi_utils import notification
-from fenlight.resources.lib.modules.utils import TaskPool, normalize, get_datetime, get_current_timestamp
-from fenlight.resources.lib.modules.settings import ai_model_order, ai_model_limit, max_threads, tmdb_api_key, mpaa_region
+from apis import groq_api
+from apis.tmdb_api import tmdb_movies_search, tmdb_tv_search
+from caches.base_cache import get_timestamp
+from caches.lists_cache import lists_cache, lists_cache_object
+from apis import google_api
+from modules.metadata import movie_meta, tvshow_meta
+from modules.kodi_utils import notification
+from modules.utils import TaskPool, normalize, get_datetime, get_current_timestamp
+from modules.settings import ai_model_order, ai_model_limit, max_threads, tmdb_api_key, mpaa_region
 # from modules.kodi_utils import logger
 
 # GOOGLE_MODELS = ('gemini-2.5-flash-lite', 'gemini-2.0-flash', 'gemini-2.5-flash', 'gemma-3-27b-it', 'gemma-3-12b-it', 'gemma-3-1b-it', 'gemma-3-4b-it', 'gemini-3-flash-preview')

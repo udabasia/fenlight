@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import json
 from urllib.parse import parse_qsl, unquote
-from fenlight.resources.lib.caches.navigator_cache import navigator_cache
-from fenlight.resources.lib.modules import kodi_utils
+from caches.navigator_cache import navigator_cache
+from modules import kodi_utils
 # logger = kodi_utils.logger
 
 class MenuEditor:

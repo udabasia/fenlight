@@ -2,16 +2,16 @@
 import json
 import time
 from threading import Thread
-from fenlight.resources.lib.modules import debrid, kodi_utils, metadata, settings
-from fenlight.resources.lib.scrapers import external
-from fenlight.resources.lib.windows.base_window import open_window, create_window
-from fenlight.resources.lib.caches.episode_groups_cache import episode_groups_cache
-from fenlight.resources.lib.caches.settings_cache import get_setting
-from fenlight.resources.lib.scrapers import folders
-from fenlight.resources.lib.modules import watched_status
-from fenlight.resources.lib.modules.player import FenLightPlayer
-from fenlight.resources.lib.modules.source_utils import get_cache_expiry, make_alias_dict, include_exclude_filters
-from fenlight.resources.lib.modules.utils import clean_file_name, string_to_float, safe_string, remove_accents, get_datetime, append_module_to_syspath, manual_function_import
+from modules import debrid, kodi_utils, metadata, settings
+from scrapers import external
+from windows.base_window import open_window, create_window
+from caches.episode_groups_cache import episode_groups_cache
+from caches.settings_cache import get_setting
+from scrapers import folders
+from modules import watched_status
+from modules.player import FenLightPlayer
+from modules.source_utils import get_cache_expiry, make_alias_dict, include_exclude_filters
+from modules.utils import clean_file_name, string_to_float, safe_string, remove_accents, get_datetime, append_module_to_syspath, manual_function_import
 # logger = kodi_utils.logger
 
 class Sources():
@@ -396,7 +396,7 @@ class Sources():
 		if next_action == 'imdb_year':
 			if next_setting in (1, 2) and self.active_external and not self.orig_results and not self.meta.get('custom_year'):
 				if next_setting == 1 or kodi_utils.confirm_dialog(heading=self.meta.get('rootname', ''), text='No results.[CR]Retry With IMDb Year Data?'):
-					from fenlight.resources.lib.apis.imdb_api import imdb_year_check
+					from apis.imdb_api import imdb_year_check
 					imdb_year = str(imdb_year_check(self.meta.get('imdb_id')))
 					if imdb_year != self.get_search_year():
 						self.meta['custom_year'] = imdb_year
@@ -420,7 +420,7 @@ class Sources():
 						self.threads, self.disabled_ext_ignored, self.prescrape = [], True, True, False
 						return self.playback_prep()
 					if next_setting == 2:
-						from fenlight.resources.lib.indexers.dialogs import episode_groups_choice
+						from indexers.dialogs import episode_groups_choice
 						try: group_id = episode_groups_choice({'meta': self.meta, 'poster': self.meta['poster']})
 						except: group_id = None
 					else:
@@ -824,7 +824,7 @@ class Sources():
 		try:
 			if direct_debrid_link or scrape_provider == 'folders': url = url_dl
 			elif scrape_provider == 'easynews':
-				from fenlight.resources.lib.indexers.easynews import resolve_easynews
+				from indexers.easynews import resolve_easynews
 				url = resolve_easynews({'url_dl': url_dl, 'play': 'false'})
 			else:
 				debrid_function = self.debrid_importer(scrape_provider)

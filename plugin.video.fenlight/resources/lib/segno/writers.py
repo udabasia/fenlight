@@ -21,8 +21,8 @@ from operator import itemgetter
 from contextlib import contextmanager
 from collections import defaultdict
 import time
-from fenlight.resources.lib.segno import consts
-from fenlight.resources.lib.segno.utils import matrix_to_lines, get_symbol_size, get_border, check_valid_scale, check_valid_border, matrix_iter, matrix_iter_verbose
+from segno import consts
+from segno.utils import matrix_to_lines, get_symbol_size, get_border, check_valid_scale, check_valid_border, matrix_iter, matrix_iter_verbose
 from itertools import zip_longest
 from urllib.parse import quote
 

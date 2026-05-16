@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from fenlight.resources.lib.caches.settings_cache import get_setting, set_setting, default_setting_values
-from fenlight.resources.lib.modules.kodi_utils import translate_path, get_property
-from fenlight.resources.lib.modules.kodi_utils import logger
+from caches.settings_cache import get_setting, set_setting, default_setting_values
+from modules.kodi_utils import translate_path, get_property
+from modules.kodi_utils import logger
 
 def tmdb_api_key():
 	return get_setting('fenlight.tmdb_api', '')
