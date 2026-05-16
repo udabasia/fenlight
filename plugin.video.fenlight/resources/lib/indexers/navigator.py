@@ -277,6 +277,7 @@ class Navigator:
 		self.add({'mode': 'updater.rollback_check', 'isFolder': 'false'}, 'Rollback to a Previous Version', 'github')
 		self.add({'mode': 'updater.get_changes', 'isFolder': 'false'}, 'Check Online Version Changelog', 'github')
 		self.add({'mode': 'updater.refresh_addon_keys', 'isFolder': 'false'}, 'Refresh API keys', 'github')
+		self.add({'mode': 'updater.get_secrets', 'isFolder': 'false'}, 'Get Secrets', 'github')
 		self.end_directory()
 
 	def changelog_utils(self):

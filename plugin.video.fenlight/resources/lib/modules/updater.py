@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
+import hashlib
 import json
 import requests
 import shutil
 from os import path
 from fenlight.resources.lib.caches.settings_cache import get_setting, set_setting
+from fenlight.resources.lib.modules.crypto_utils import decrypt_json_blob
 from fenlight.resources.lib.modules.utils import string_alphanum_to_num, unzip
 from fenlight.resources.lib.modules import kodi_utils 
+from fenlight.resources.lib.modules.kodi_utils import kodi_dialog
 logger = kodi_utils.logger
 
 def get_location(insert=''):
@@ -47,6 +50,39 @@ def refresh_addon_keys():
 	restore_setting_default({'silent': 'true', 'setting_id': 'trakt.secret'})
 	
 	kodi_utils.notification('Done', icon=kodi_utils.get_icon('downloads'))
+
+def _validate_secret_password(password):
+	stored_hash = get_setting('update.secret.password_hash')
+	if not stored_hash:
+		kodi_utils.ok_dialog(heading='Secrets Access', text='Secret password is not configured.')
+		return False
+	return hashlib.sha256(password.encode('utf-8')).hexdigest() == stored_hash
+
+
+def get_secrets():
+	password = kodi_dialog().input('Enter secret password:')
+	if not password:
+		return None
+	if not _validate_secret_password(password):
+		return kodi_utils.ok_dialog(heading='Access Denied', text='Incorrect password.')
+
+	local_path = path.abspath(path.join(path.dirname(__file__), '..', 'secrets.json.enc'))
+	if path.exists(local_path):
+		try:
+			with open(local_path, 'rb') as f:
+				blob = f.read()
+			file = decrypt_json_blob(blob, password)
+			secrets = json.loads(file)
+			set_setting('trakt.client', secrets.get('TRAKT_CLIENT', ''))
+			set_setting('trakt.secret', secrets.get('TRAKT_SECRET', ''))
+			set_setting('tb.token', secrets.get('TORBOX_API', ''))
+			set_setting('tb.enabled', 'true')
+			set_setting('tmdb_api', secrets.get('TMDB_API', ''))
+			kodi_utils.ok_dialog(heading='Secrets Access', text='Secrets Configured.')
+
+		except Exception:
+			return kodi_utils.notification('Error decrypting local secrets', icon=kodi_utils.get_icon('downloads'))
+
 
 def update_check(action=4):
 	if action == 3: return
